@@ -1,8 +1,8 @@
-package lithium.hikariessentials.HikariEssentials;
+package lithium.hikariessentials.HikariTokens.utils.api;
 
-import lithium.hikariessentials.HikariEssentials;
-import lithium.hikariessentials.HikariEssentials.data.H2UserData;
-import lithium.hikariessentials.HikariEssentials.data.UserData;
+import lithium.hikariessentials.HikariTokens.HikariEssentialsToken;
+import lithium.hikariessentials.HikariTokens.data.H2UserData;
+import lithium.hikariessentials.HikariTokens.data.UserData;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.OfflinePlayer;
@@ -18,7 +18,7 @@ public class VaultAPI implements Economy {
 
     @Override
     public String getName() {
-        return HikariEssentials.getInstance().getDescription().getName();
+        return HikariEssentialsToken.getInstance().getDescription().getName();
     }
 
     @Override
@@ -53,10 +53,10 @@ public class VaultAPI implements Economy {
 
     @Override
     public boolean hasAccount(OfflinePlayer player) {
-        if (HikariEssentials.getInstance().isMySQL()) {
-            return HikariEssentials.getUser().exists(player.getUniqueId());
-        } else if (HikariEssentials.getInstance().isH2()) {
-            return HikariEssentials.getH2user().exists(player.getUniqueId());
+        if (HikariEssentialsToken.getInstance().isMySQL()) {
+            return HikariEssentialsToken.getUser().exists(player.getUniqueId());
+        } else if (HikariEssentialsToken.getInstance().isH2()) {
+            return HikariEssentialsToken.getH2user().exists(player.getUniqueId());
         }
 
         return false;
@@ -81,9 +81,9 @@ public class VaultAPI implements Economy {
     public double getBalance(OfflinePlayer player) {
         double amount = 0;
 
-        if (HikariEssentials.getInstance().isMySQL()) {
+        if (HikariEssentialsToken.getInstance().isMySQL()) {
             amount = UserData.getTokensInt(player.getUniqueId());
-        } else if (HikariEssentials.getInstance().isMySQL()) {
+        } else if (HikariEssentialsToken.getInstance().isMySQL()) {
             amount = H2UserData.getTokensInt(player.getUniqueId());
         }
 
