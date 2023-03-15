@@ -1,4 +1,4 @@
-package lithium.hikariessentials.HikariTokens;
+package lithium.hikariessentials.HikariTokens.utils;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;

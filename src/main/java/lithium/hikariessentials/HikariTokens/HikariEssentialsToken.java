@@ -1,5 +1,19 @@
-package lithium.hikariessentials;
+package lithium.hikariessentials.HikariTokens;
 
+import lithium.hikariessentials.HikariTokens.commands.*;
+import lithium.hikariessentials.HikariTokens.data.*;
+import lithium.hikariessentials.HikariTokens.hook.LoadHook;
+import lithium.hikariessentials.HikariTokens.listeners.KillEvents;
+import lithium.hikariessentials.HikariTokens.listeners.MenuListener;
+import lithium.hikariessentials.HikariTokens.listeners.PlayerEvents;
+import lithium.hikariessentials.HikariTokens.manager.BankManager;
+import lithium.hikariessentials.HikariTokens.manager.ConfigManager;
+import lithium.hikariessentials.HikariTokens.manager.TokenManager;
+import lithium.hikariessentials.HikariTokens.utils.api.PlaceHolderAPI;
+import lithium.hikariessentials.HikariTokens.utils.api.TokenAPI;
+import lithium.hikariessentials.HikariTokens.utils.api.VaultAPI;
+import lithium.hikariessentials.HikariTokens.utils.bstats.TokenMetrics;
+import lithium.hikariessentials.HikariTokens.utils.menu.TokenMenuUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -18,10 +32,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public final class HikariEssentials extends JavaPlugin {
+public final class HikariEssentialsToken extends JavaPlugin {
 
-    private static HikariEssentials instance;
-    private static MySQL mysql;
+    private static HikariEssentialsToken instance;
+    private static TokenMySQL mysql;
     private static H2Database h2;
     private final H2UserData h2user = new H2UserData();
     private TokenManager tm;
@@ -29,7 +43,7 @@ public final class HikariEssentials extends JavaPlugin {
     private final MySQLUserData user = new MySQLUserData();
     public static TokenAPI tokenAPI;
     private VaultAPI eco_vault;
-    private static final HashMap<Player, MenuUtil> menuUtilMap = new HashMap<>();
+    private static final HashMap<Player, TokenMenuUtil> menuUtilMap = new HashMap<>();
     private static final HashMap<OfflinePlayer, TokenManager> tokenMap = new HashMap<>();
     private static final HashMap<OfflinePlayer, BankManager> bankMap = new HashMap<>();
 
@@ -165,7 +179,7 @@ public final class HikariEssentials extends JavaPlugin {
         Objects.requireNonNull(getCommand("bank")).setExecutor(new TBank());
 
         if (isMySQL()) {
-            mysql = new MySQL(host, port, database, username, password, options);
+            mysql = new TokenMySQL(host, port, database, username, password, options);
         }
 
         if (isH2()) {
@@ -203,10 +217,9 @@ public final class HikariEssentials extends JavaPlugin {
         }
     }
 
-    public static HikariEssentials getInstance() {
+    public static HikariEssentialsToken getInstance() {
         return instance;
     }
-
     public static ConfigManager getConfigManager() {
         return config;
     }
@@ -219,7 +232,7 @@ public final class HikariEssentials extends JavaPlugin {
         return instance.user;
     }
 
-    public static MySQL getMysql() {
+    public static TokenMySQL getMysql() {
         return mysql;
     }
 
@@ -227,13 +240,13 @@ public final class HikariEssentials extends JavaPlugin {
         return h2;
     }
 
-    public static MenuUtil getMenuUtil(Player player) {
-        MenuUtil menuUtil;
+    public static TokenMenuUtil getMenuUtil(Player player) {
+        TokenMenuUtil menuUtil;
 
         if (menuUtilMap.containsKey(player)) {
             return menuUtilMap.get(player);
         } else {
-            menuUtil = new MenuUtil(player);
+            menuUtil = new TokenMenuUtil(player);
             menuUtilMap.put(player, menuUtil);
         }
 
@@ -310,11 +323,11 @@ public final class HikariEssentials extends JavaPlugin {
 
     private void callMetrics() {
         int pluginId = 15240;
-        Metrics metrics = new Metrics(this, pluginId);
+        TokenMetrics metrics = new TokenMetrics(this, pluginId);
 
-        metrics.addCustomChart(new Metrics.SimplePie("used_language", () -> getConfig().getString("language", "en")));
+        metrics.addCustomChart(new TokenMetrics.SimplePie("used_language", () -> getConfig().getString("language", "en")));
 
-        metrics.addCustomChart(new Metrics.DrilldownPie("java_version", () -> {
+        metrics.addCustomChart(new TokenMetrics.DrilldownPie("java_version", () -> {
             Map<String, Map<String, Integer>> map = new HashMap<>();
             String javaVersion = System.getProperty("java.version");
             Map<String, Integer> entry = new HashMap<>();
