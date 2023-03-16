@@ -1,6 +1,6 @@
 package lithium.hikariessentials.HikariTokens.commands;
 
-import lithium.hikariessentials.HikariTokens.HikariEssentialsToken;
+import lithium.hikariessentials.HikariMain;
 import lithium.hikariessentials.HikariTokens.manager.ConfigManager;
 import lithium.hikariessentials.HikariTokens.manager.TokenManager;
 import lithium.hikariessentials.Utils.ColorUtils;
@@ -15,8 +15,8 @@ import java.util.Objects;
 public class TBalance implements CommandExecutor {
 
 
-    private final HikariEssentialsToken te = HikariEssentialsToken.getPlugin(HikariEssentialsToken.class);
-    private final ConfigManager config = HikariEssentialsToken.getConfigManager();
+    private final HikariMain te = HikariMain.getPlugin(HikariMain.class);
+    private final ConfigManager config = HikariMain.getConfigManager();
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -28,7 +28,7 @@ public class TBalance implements CommandExecutor {
 
             // if (player.hasPermission("te.balance") || player.hasPermission("te.player")) {
 
-            TokenManager tokens = HikariEssentialsToken.getTokenManager(player);
+            TokenManager tokens = HikariMain.getTokenManager(player);
 
             if (cmd.getName().equalsIgnoreCase("balance")) {
                 // /tbalance - giving the player their balance
@@ -37,23 +37,23 @@ public class TBalance implements CommandExecutor {
                         Player target = Bukkit.getPlayer(args[0]);
 
                         if (target != null) {
-                            TokenManager tokensTarget = HikariEssentialsToken.getTokenManager(player);
+                            TokenManager tokensTarget = HikariMain.getTokenManager(player);
                             player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(
-                                    HikariEssentialsToken.getConfigManager().getMessages().getString("m.BALANCE")).replaceAll("%tokens%",
-                                    String.valueOf(tokensTarget.getTokens()).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix()))));
+                                    HikariMain.getConfigManager().getMessages().getString("m.BALANCE")).replaceAll("%tokens%",
+                                    String.valueOf(tokensTarget.getTokens()).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix()))));
                         }
                     } else {
                         player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(
-                                HikariEssentialsToken.getConfigManager().getMessages().getString("m.PERMISSION")).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix())));
+                                HikariMain.getConfigManager().getMessages().getString("m.PERMISSION")).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix())));
                     }
                 } else {
                     if (player.hasPermission("te.balance") || player.hasPermission("te.player")) {
                         player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(
-                                HikariEssentialsToken.getConfigManager().getMessages().getString("m.BALANCE")).replaceAll("%tokens%",
-                                String.valueOf(tokens.getTokens()).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix()))));
+                                HikariMain.getConfigManager().getMessages().getString("m.BALANCE")).replaceAll("%tokens%",
+                                String.valueOf(tokens.getTokens()).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix()))));
                     } else {
                         player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(
-                                HikariEssentialsToken.getConfigManager().getMessages().getString("m.PERMISSION")).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix())));
+                                HikariMain.getConfigManager().getMessages().getString("m.PERMISSION")).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix())));
                     }
                 }
             }

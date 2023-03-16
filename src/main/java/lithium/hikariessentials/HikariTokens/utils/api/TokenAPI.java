@@ -1,6 +1,6 @@
 package lithium.hikariessentials.HikariTokens.utils.api;
 
-import lithium.hikariessentials.HikariTokens.HikariEssentialsToken;
+import lithium.hikariessentials.HikariMain;
 import lithium.hikariessentials.HikariTokens.data.UserData;
 import lithium.hikariessentials.HikariTokens.manager.TokenManager;
 import org.bukkit.OfflinePlayer;
@@ -10,13 +10,13 @@ public class TokenAPI {
 
 
 
-    private final HikariEssentialsToken te = HikariEssentialsToken.getPlugin(HikariEssentialsToken.class);
+    private final HikariMain te = HikariMain.getPlugin(HikariMain.class);
 
     public int getTokensInt(OfflinePlayer player) {
         if (!player.isOnline()) {
             UserData.getTokensInt(player.getUniqueId());
         } else {
-            TokenManager tokens = HikariEssentialsToken.getTokenManager(player);
+            TokenManager tokens = HikariMain.getTokenManager(player);
             return tokens.getTokens();
         }
         return 0;
@@ -26,7 +26,7 @@ public class TokenAPI {
         if (!player.isOnline()) {
             UserData.getTokensDouble(player.getUniqueId());
         } else {
-            TokenManager tokens = HikariEssentialsToken.getTokenManager(player);
+            TokenManager tokens = HikariMain.getTokenManager(player);
             return tokens.getTokens();
         }
 
@@ -38,7 +38,7 @@ public class TokenAPI {
         if (!player.isOnline()) {
             UserData.setTokens(player.getUniqueId(), amount);
         } else {
-            TokenManager tokens = HikariEssentialsToken.getTokenManager(player);
+            TokenManager tokens = HikariMain.getTokenManager(player);
             tokens.setTokens(amount);
         }
     }
@@ -47,7 +47,7 @@ public class TokenAPI {
         if (!player.isOnline()) {
             UserData.setTokens(player.getUniqueId(), amount);
         } else {
-            TokenManager tokens = HikariEssentialsToken.getTokenManager(player);
+            TokenManager tokens = HikariMain.getTokenManager(player);
             tokens.setTokens((int) amount);
         }
     }
@@ -57,7 +57,7 @@ public class TokenAPI {
         if (!player.isOnline()) {
             UserData.addTokens(player.getUniqueId(), amount);
         } else {
-            TokenManager tokens = HikariEssentialsToken.getTokenManager(player);
+            TokenManager tokens = HikariMain.getTokenManager(player);
             tokens.addTokens(amount);
         }
     }
@@ -67,7 +67,7 @@ public class TokenAPI {
         if (!player.isOnline()) {
             UserData.addTokens(player.getUniqueId(), amount);
         } else {
-            TokenManager tokens = HikariEssentialsToken.getTokenManager(player);
+            TokenManager tokens = HikariMain.getTokenManager(player);
             tokens.addTokens((int) amount);
         }
     }
@@ -77,7 +77,7 @@ public class TokenAPI {
         if (!player.isOnline()) {
             UserData.removeTokens(player.getUniqueId(), amount);
         } else {
-            TokenManager tokens = HikariEssentialsToken.getTokenManager(player);
+            TokenManager tokens = HikariMain.getTokenManager(player);
             tokens.removeTokens(amount);
         }
     }
@@ -87,7 +87,7 @@ public class TokenAPI {
         if (!player.isOnline()) {
             UserData.removeTokens(player.getUniqueId(), amount);
         } else {
-            TokenManager tokens = HikariEssentialsToken.getTokenManager(player);
+            TokenManager tokens = HikariMain.getTokenManager(player);
             tokens.removeTokens((int) amount);
         }
     }
@@ -95,10 +95,10 @@ public class TokenAPI {
     public void resetTokens(OfflinePlayer player) {
 
         if (!player.isOnline()) {
-            UserData.setTokens(player.getUniqueId(), HikariEssentialsToken.getConfigManager().getDefaultTokens());
+            UserData.setTokens(player.getUniqueId(), HikariMain.getConfigManager().getDefaultTokens());
         } else {
-            TokenManager tokens = HikariEssentialsToken.getTokenManager(player);
-            tokens.setTokens(HikariEssentialsToken.getConfigManager().getDefaultTokens());
+            TokenManager tokens = HikariMain.getTokenManager(player);
+            tokens.setTokens(HikariMain.getConfigManager().getDefaultTokens());
         }
     }
 

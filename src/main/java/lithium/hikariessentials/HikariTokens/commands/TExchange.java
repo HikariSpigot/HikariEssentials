@@ -1,6 +1,6 @@
 package lithium.hikariessentials.HikariTokens.commands;
 
-import lithium.hikariessentials.HikariTokens.HikariEssentialsToken;
+import lithium.hikariessentials.HikariMain;
 import lithium.hikariessentials.HikariTokens.manager.ConfigManager;
 import lithium.hikariessentials.HikariTokens.utils.menu.menus.ExchangeMenu;
 import lithium.hikariessentials.Utils.ColorUtils;
@@ -13,8 +13,8 @@ import java.util.Objects;
 
 public class TExchange implements CommandExecutor {
 
-    private final HikariEssentialsToken te = HikariEssentialsToken.getPlugin(HikariEssentialsToken.class);
-    private final ConfigManager config = HikariEssentialsToken.getConfigManager();
+    private final HikariMain te = HikariMain.getPlugin(HikariMain.class);
+    private final ConfigManager config = HikariMain.getConfigManager();
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -27,10 +27,10 @@ public class TExchange implements CommandExecutor {
             if (cmd.getName().equalsIgnoreCase("texchange")) {
                 if (player.hasPermission("te.exchange") || player.hasPermission("te.player")) {
                     // /tbalance - giving the player their balance
-                    new ExchangeMenu(HikariEssentialsToken.getMenuUtil(player)).open();
+                    new ExchangeMenu(HikariMain.getMenuUtil(player)).open();
                 } else {
                     player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(
-                            HikariEssentialsToken.getConfigManager().getMessages().getString("m.PERMISSION")).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix())));
+                            HikariMain.getConfigManager().getMessages().getString("m.PERMISSION")).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix())));
                 }
             }
         }

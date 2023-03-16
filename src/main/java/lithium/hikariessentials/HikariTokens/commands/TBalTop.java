@@ -1,6 +1,6 @@
 package lithium.hikariessentials.HikariTokens.commands;
 
-import lithium.hikariessentials.HikariTokens.HikariEssentialsToken;
+import lithium.hikariessentials.HikariMain;
 import lithium.hikariessentials.HikariTokens.manager.ConfigManager;
 import lithium.hikariessentials.HikariTokens.utils.menu.menus.TopMenu;
 import lithium.hikariessentials.Utils.ColorUtils;
@@ -14,8 +14,8 @@ import java.util.Objects;
 public class TBalTop implements CommandExecutor {
 
 
-    private final HikariEssentialsToken te = HikariEssentialsToken.getPlugin(HikariEssentialsToken.class);
-    private final ConfigManager config = HikariEssentialsToken.getConfigManager();
+    private final HikariMain te = HikariMain.getPlugin(HikariMain.class);
+    private final ConfigManager config = HikariMain.getConfigManager();
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -27,10 +27,10 @@ public class TBalTop implements CommandExecutor {
 
             if (cmd.getName().equalsIgnoreCase("baltop")) {
                 if (player.hasPermission("te.baltop") || player.hasPermission("te.player")) {
-                    new TopMenu(HikariEssentialsToken.getMenuUtil(player)).open();
+                    new TopMenu(HikariMain.getMenuUtil(player)).open();
                 } else {
                     player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(
-                            HikariEssentialsToken.getConfigManager().getMessages().getString("m.PERMISSION"))));
+                            HikariMain.getConfigManager().getMessages().getString("m.PERMISSION"))));
                 }
             }
         }

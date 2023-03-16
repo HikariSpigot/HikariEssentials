@@ -1,6 +1,6 @@
 package lithium.hikariessentials.HikariTokens.utils.menu.menus;
 
-import lithium.hikariessentials.HikariTokens.HikariEssentialsToken;
+import lithium.hikariessentials.HikariMain;
 import lithium.hikariessentials.HikariTokens.data.H2UserData;
 import lithium.hikariessentials.HikariTokens.data.UserData;
 import lithium.hikariessentials.HikariTokens.utils.TokenUtils;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class TokenTop extends TokenMenu {
 
 
-    private final HikariEssentialsToken te = HikariEssentialsToken.getPlugin(HikariEssentialsToken.class);
+    private final HikariMain te = HikariMain.getPlugin(HikariMain.class);
 
     public TokenTop(TokenMenuUtil menuUtil) {
         super(menuUtil);
@@ -28,12 +28,12 @@ public class TokenTop extends TokenMenu {
 
     @Override
     public String getMenuName() {
-        return TokenUtils.applyFormat(HikariEssentialsToken.getConfigManager().getTitleTop());
+        return TokenUtils.applyFormat(HikariMain.getConfigManager().getTitleTop());
     }
 
     @Override
     public int getSlots() {
-        return HikariEssentialsToken.getConfigManager().getSlotsTop();
+        return HikariMain.getConfigManager().getSlotsTop();
     }
 
     @Override
@@ -76,11 +76,11 @@ public class TokenTop extends TokenMenu {
         assert meta != null;
         meta.setOwningPlayer(Bukkit.getOfflinePlayer(name));
 
-        for (String lore : HikariEssentialsToken.getConfigManager().getTokenTop().getStringList("gui.items.top_players.lore")) {
-            nameItem(name, skull, TokenUtils.applyFormat(TokenUtils.applyFormat(HikariEssentialsToken.getConfigManager().getTokenTop().getString("gui.items.top_players.displayname"))), lore);
+        for (String lore : HikariMain.getConfigManager().getTokenTop().getStringList("gui.items.top_players.lore")) {
+            nameItem(name, skull, TokenUtils.applyFormat(TokenUtils.applyFormat(HikariMain.getConfigManager().getTokenTop().getString("gui.items.top_players.displayname"))), lore);
         }
 
-        String displayname = HikariEssentialsToken.getConfigManager().getTokenTop().getString("gui.items.top_players.displayname");
+        String displayname = HikariMain.getConfigManager().getTokenTop().getString("gui.items.top_players.displayname");
 
         assert displayname != null;
         if (te.isMySQL()) {

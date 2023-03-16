@@ -1,6 +1,6 @@
 package lithium.hikariessentials.HikariTokens.hook;
 
-import lithium.hikariessentials.HikariTokens.HikariEssentialsToken;
+import lithium.hikariessentials.HikariMain;
 import lithium.hikariessentials.HikariTokens.utils.api.VaultAPI;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
@@ -19,19 +19,19 @@ public class LoadHook {
     @SuppressWarnings("ConstantConditions")
     public static void load() {
         econ = new VaultAPI();
-        RegisteredServiceProvider<Permission> rsp = HikariEssentialsToken.getInstance().getServer().getServicesManager().getRegistration(Permission.class);
+        RegisteredServiceProvider<Permission> rsp = HikariMain.getInstance().getServer().getServicesManager().getRegistration(Permission.class);
         if (rsp != null) {
             vaultPerm = rsp.getProvider();
         }
 
-        HikariEssentialsToken.getInstance().getServer().getServicesManager().register(Economy.class, econ, HikariEssentialsToken.getInstance(), ServicePriority.Highest);
+        HikariMain.getInstance().getServer().getServicesManager().register(Economy.class, econ, HikariMain.getInstance(), ServicePriority.Highest);
 
-        if (HikariEssentialsToken.getInstance().getConfig().getBoolean("t.support.disable-essentials-eco")) {
+        if (HikariMain.getInstance().getConfig().getBoolean("t.support.disable-essentials-eco")) {
             Collection<RegisteredServiceProvider<Economy>> econs = Bukkit.getPluginManager().getPlugin("Vault").getServer().getServicesManager().getRegistrations(Economy.class);
             for (RegisteredServiceProvider<Economy> econ : econs) {
                 if (econ.getProvider().getName().equalsIgnoreCase("Essentials Economy")||
                         econ.getProvider().getName().equalsIgnoreCase("EssentialsX Economy")) {
-                    HikariEssentialsToken.getInstance().getServer().getServicesManager().unregister(econ.getProvider());
+                    HikariMain.getInstance().getServer().getServicesManager().unregister(econ.getProvider());
                 }
             }
         }
@@ -40,7 +40,7 @@ public class LoadHook {
     }
 
     public static boolean loadcm() {
-        RegisteredServiceProvider<Economy> rsp = HikariEssentialsToken.getInstance().getServer().getServicesManager().getRegistration(Economy.class);
+        RegisteredServiceProvider<Economy> rsp = HikariMain.getInstance().getServer().getServicesManager().getRegistration(Economy.class);
         if (rsp == null) {
             return false;
         }
@@ -49,6 +49,6 @@ public class LoadHook {
     }
 
     public static void unload() {
-        HikariEssentialsToken.getInstance().getServer().getServicesManager().unregister(econ);
+        HikariMain.getInstance().getServer().getServicesManager().unregister(econ);
     }
 }

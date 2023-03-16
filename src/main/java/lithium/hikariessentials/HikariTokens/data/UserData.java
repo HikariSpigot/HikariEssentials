@@ -1,6 +1,6 @@
 package lithium.hikariessentials.HikariTokens.data;
 
-import lithium.hikariessentials.HikariTokens.HikariEssentialsToken;
+import lithium.hikariessentials.HikariMain;
 import lithium.hikariessentials.HikariTokens.manager.TokenManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -12,7 +12,7 @@ import java.util.UUID;
 public class UserData {
 
 
-    private static final HikariEssentialsToken te = HikariEssentialsToken.getPlugin(HikariEssentialsToken.class);
+    private static final HikariMain te = HikariMain.getPlugin(HikariMain.class);
 
     public static void setIgnore(UUID uuid, boolean ignore) {
         if (te.isMySQL())
@@ -157,9 +157,9 @@ public class UserData {
 
     public static void createUserAccount(Player player) {
         if (te.isMySQL()) {
-            HikariEssentialsToken.getUser().createPlayer(player);
+            HikariMain.getUser().createPlayer(player);
         } else if (te.isH2()) {
-            HikariEssentialsToken.getH2user().createPlayer(player);
+            HikariMain.getH2user().createPlayer(player);
         }
     }
 
@@ -169,7 +169,7 @@ public class UserData {
             public void run() {
                 for (Player players : Bukkit.getOnlinePlayers()) {
                     if (Bukkit.getOnlinePlayers().size() >= 1) {
-                        TokenManager tokens = HikariEssentialsToken.getTokenManager(players);
+                        TokenManager tokens = HikariMain.getTokenManager(players);
 
                         if (te.isMySQL()) {
                             MySQLUserData.setTokens(players.getUniqueId(), tokens.getTokens());
@@ -177,14 +177,14 @@ public class UserData {
                             H2UserData.setTokens(players.getUniqueId(), tokens.getTokens());
                         }
 
-                        HikariEssentialsToken.getTokenMap().clear();
-                        HikariEssentialsToken.getTokenManager(players);
+                        HikariMain.getTokenMap().clear();
+                        HikariMain.getTokenManager(players);
                     }
                 }
 
                 Bukkit.getConsoleSender().sendMessage("[TokenStatUpdater] Updated Token-Stats!");
             }
-        }.runTaskTimer(HikariEssentialsToken.getInstance(), 0, 20 * HikariEssentialsToken.getInstance().getConfig().getInt("t.plugin.update-stats"));
+        }.runTaskTimer(HikariMain.getInstance(), 0, 20 * HikariMain.getInstance().getConfig().getInt("t.plugin.update-stats"));
 
     }
 

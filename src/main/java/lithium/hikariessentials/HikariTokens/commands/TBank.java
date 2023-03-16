@@ -1,6 +1,6 @@
 package lithium.hikariessentials.HikariTokens.commands;
 
-import lithium.hikariessentials.HikariTokens.HikariEssentialsToken;
+import lithium.hikariessentials.HikariMain;
 import lithium.hikariessentials.HikariTokens.manager.BankManager;
 import lithium.hikariessentials.HikariTokens.manager.TokenManager;
 import lithium.hikariessentials.Utils.ColorUtils;
@@ -24,24 +24,24 @@ public class TBank implements CommandExecutor {
             if (cmd.getName().equalsIgnoreCase("bank")) {
                 if (player.hasPermission("te.bank") || player.hasPermission("te.player")) {
                     if (args.length == 0) {
-                        BankManager bank = HikariEssentialsToken.getBankManager(player);
+                        BankManager bank = HikariMain.getBankManager(player);
 
                         player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(
-                                HikariEssentialsToken.getConfigManager().getMessages().getString("m.BANK-BALANCE")).replace("%tokens%",
-                                String.valueOf(bank.getBank()).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix()))));
+                                HikariMain.getConfigManager().getMessages().getString("m.BANK-BALANCE")).replace("%tokens%",
+                                String.valueOf(bank.getBank()).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix()))));
                     } else if (args.length == 1) {
                         if (args[0].equalsIgnoreCase("help")) {
-                            for (String bank_help : HikariEssentialsToken.getConfigManager().getMessages().getStringList("m.BANK-HELP")) {
-                                player.sendMessage(ColorUtils.translateColorCodes(bank_help).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix()));
+                            for (String bank_help : HikariMain.getConfigManager().getMessages().getStringList("m.BANK-HELP")) {
+                                player.sendMessage(ColorUtils.translateColorCodes(bank_help).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix()));
                             }
                         } else {
-                            for (String bank_help : HikariEssentialsToken.getConfigManager().getMessages().getStringList("m.BANK-HELP")) {
-                                player.sendMessage(ColorUtils.translateColorCodes(bank_help).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix()));
+                            for (String bank_help : HikariMain.getConfigManager().getMessages().getStringList("m.BANK-HELP")) {
+                                player.sendMessage(ColorUtils.translateColorCodes(bank_help).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix()));
                             }
                         }
                     } else if (args.length == 2) {
-                        BankManager bank = HikariEssentialsToken.getBankManager(player);
-                        TokenManager tokens = HikariEssentialsToken.getTokenManager(player);
+                        BankManager bank = HikariMain.getBankManager(player);
+                        TokenManager tokens = HikariMain.getTokenManager(player);
                         // tbank withdraw <amount>
                         // tbank deposit <amount>
                         if (args[0].equalsIgnoreCase("withdraw")) {
@@ -49,26 +49,26 @@ public class TBank implements CommandExecutor {
                             // remove from bank and add to token balance
                             // check if they have enough bank balance
 
-                            if (!(amount > HikariEssentialsToken.getConfigManager().getMaxWithdraw())) {
-                                if (!(amount < HikariEssentialsToken.getConfigManager().getMinWithdraw())) {
+                            if (!(amount > HikariMain.getConfigManager().getMaxWithdraw())) {
+                                if (!(amount < HikariMain.getConfigManager().getMinWithdraw())) {
                                     if (bank.getBank() >= amount) {
                                         bank.removeBank(amount);
                                         tokens.addTokens(amount);
 
                                         player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(
-                                                HikariEssentialsToken.getConfigManager().getMessages().getString("m.BANK-WITHDRAW")).replaceAll("%amount%",
-                                                String.valueOf(amount)).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix())));
+                                                HikariMain.getConfigManager().getMessages().getString("m.BANK-WITHDRAW")).replaceAll("%amount%",
+                                                String.valueOf(amount)).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix())));
                                     } else {
                                         player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(
-                                                HikariEssentialsToken.getConfigManager().getMessages().getString("m.NOT-ENOUGH-TO-WITHDRAW")).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix())));
+                                                HikariMain.getConfigManager().getMessages().getString("m.NOT-ENOUGH-TO-WITHDRAW")).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix())));
                                     }
                                 } else {
                                     player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(
-                                            HikariEssentialsToken.getConfigManager().getMessages().getString("m.MIN-WITHDRAW")).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix())));
+                                            HikariMain.getConfigManager().getMessages().getString("m.MIN-WITHDRAW")).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix())));
                                 }
                             } else {
                                 player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(
-                                        HikariEssentialsToken.getConfigManager().getMessages().getString("m.MAX-WITHDRAW")).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix())));
+                                        HikariMain.getConfigManager().getMessages().getString("m.MAX-WITHDRAW")).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix())));
                             }
                         }
 
@@ -77,36 +77,36 @@ public class TBank implements CommandExecutor {
                             // add into the bank and remove from token balance
                             // check if they have enough token balance
 
-                            if (!(amount > HikariEssentialsToken.getConfigManager().getMaxDeposit())) {
-                                if (!(amount < HikariEssentialsToken.getConfigManager().getMinDeposit())) {
+                            if (!(amount > HikariMain.getConfigManager().getMaxDeposit())) {
+                                if (!(amount < HikariMain.getConfigManager().getMinDeposit())) {
                                     if (tokens.getTokens() >= amount) {
                                         tokens.removeTokens(amount);
                                         bank.addBank(amount);
 
                                         player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(
-                                                HikariEssentialsToken.getConfigManager().getMessages().getString("m.BANK-DEPOSIT")).replaceAll("%amount%",
-                                                String.valueOf(amount)).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix())));
+                                                HikariMain.getConfigManager().getMessages().getString("m.BANK-DEPOSIT")).replaceAll("%amount%",
+                                                String.valueOf(amount)).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix())));
                                     } else {
                                         player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(
-                                                HikariEssentialsToken.getConfigManager().getMessages().getString("m.NOT-ENOUGH-TO-DEPOSIT")).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix())));
+                                                HikariMain.getConfigManager().getMessages().getString("m.NOT-ENOUGH-TO-DEPOSIT")).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix())));
                                     }
                                 } else {
                                     player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(
-                                            HikariEssentialsToken.getConfigManager().getMessages().getString("m.MIN-DEPOSIT")).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix())));
+                                            HikariMain.getConfigManager().getMessages().getString("m.MIN-DEPOSIT")).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix())));
                                 }
                             } else {
                                 player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(
-                                        HikariEssentialsToken.getConfigManager().getMessages().getString("m.MAX-DEPOSIT")).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix())));
+                                        HikariMain.getConfigManager().getMessages().getString("m.MAX-DEPOSIT")).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix())));
                             }
                         }
                     } else {
-                        for (String bank_help : HikariEssentialsToken.getConfigManager().getMessages().getStringList("m.BANK-HELP")) {
-                            player.sendMessage(ColorUtils.translateColorCodes(bank_help).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix()));
+                        for (String bank_help : HikariMain.getConfigManager().getMessages().getStringList("m.BANK-HELP")) {
+                            player.sendMessage(ColorUtils.translateColorCodes(bank_help).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix()));
                         }
                     }
                 } else {
                     player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(
-                            HikariEssentialsToken.getConfigManager().getMessages().getString("m.PERMISSION")).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix())));
+                            HikariMain.getConfigManager().getMessages().getString("m.PERMISSION")).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix())));
                 }
             }
         }

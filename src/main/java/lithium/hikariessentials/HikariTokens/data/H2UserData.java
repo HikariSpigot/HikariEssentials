@@ -1,6 +1,6 @@
 package lithium.hikariessentials.HikariTokens.data;
 
-import lithium.hikariessentials.HikariTokens.HikariEssentialsToken;
+import lithium.hikariessentials.HikariMain;
 import org.bukkit.entity.Player;
 
 import java.sql.PreparedStatement;
@@ -14,7 +14,7 @@ public class H2UserData {
 
     public boolean exists(UUID uuid) {
         try {
-            PreparedStatement statement = HikariEssentialsToken.getH2Database().getConnection().prepareStatement("SELECT * FROM `user` WHERE (UUID=?)");
+            PreparedStatement statement = HikariMain.getH2Database().getConnection().prepareStatement("SELECT * FROM `user` WHERE (UUID=?)");
             statement.setString(1, String.valueOf(uuid));
             ResultSet resultSet = statement.executeQuery();
 
@@ -30,15 +30,15 @@ public class H2UserData {
     public void createPlayer(Player p) {
         try {
             if (!exists(p.getUniqueId())) {
-                PreparedStatement statement = HikariEssentialsToken.getH2Database().getConnection().prepareStatement(
+                PreparedStatement statement = HikariMain.getH2Database().getConnection().prepareStatement(
                         "INSERT INTO `user` " +
                                 "(Name, UUID, Tokens, Bank, Ignore_Pay) " +
                                 "VALUES " +
                                 "(?,?,?,?,?)");
                 statement.setString(1, p.getName());
                 statement.setString(2, String.valueOf(p.getUniqueId()));
-                statement.setInt(3, HikariEssentialsToken.getConfigManager().getDefaultTokens()); // tokens
-                statement.setInt(4, HikariEssentialsToken.getConfigManager().getDefaultBank()); // bank
+                statement.setInt(3, HikariMain.getConfigManager().getDefaultTokens()); // tokens
+                statement.setInt(4, HikariMain.getConfigManager().getDefaultBank()); // bank
                 statement.setBoolean(5, false);
                 statement.executeUpdate();
             }
@@ -49,7 +49,7 @@ public class H2UserData {
 
     public static void setIgnore(UUID uuid, boolean ignore) {
         try {
-            PreparedStatement statement = HikariEssentialsToken.getH2Database().getConnection().prepareStatement("UPDATE `user` SET Ignore_Pay=? WHERE (UUID=?)");
+            PreparedStatement statement = HikariMain.getH2Database().getConnection().prepareStatement("UPDATE `user` SET Ignore_Pay=? WHERE (UUID=?)");
             statement.setBoolean(1, ignore);
             statement.setString(2, uuid.toString());
             statement.executeUpdate();
@@ -60,7 +60,7 @@ public class H2UserData {
 
     public static void setBank(UUID uuid, int amount) {
         try {
-            PreparedStatement statement = HikariEssentialsToken.getH2Database().getConnection().prepareStatement("UPDATE `user` SET Bank=? WHERE (UUID=?)");
+            PreparedStatement statement = HikariMain.getH2Database().getConnection().prepareStatement("UPDATE `user` SET Bank=? WHERE (UUID=?)");
             statement.setInt(1, amount);
             statement.setString(2, uuid.toString());
             statement.executeUpdate();
@@ -71,7 +71,7 @@ public class H2UserData {
 
     public static void setBank(UUID uuid, double amount) {
         try {
-            PreparedStatement statement = HikariEssentialsToken.getH2Database().getConnection().prepareStatement("UPDATE `user` SET Bank=? WHERE (UUID=?)");
+            PreparedStatement statement = HikariMain.getH2Database().getConnection().prepareStatement("UPDATE `user` SET Bank=? WHERE (UUID=?)");
             statement.setDouble(1, amount);
             statement.setString(2, uuid.toString());
             statement.executeUpdate();
@@ -82,7 +82,7 @@ public class H2UserData {
 
     public static void addBank(UUID uuid, int amount) {
         try {
-            PreparedStatement statement = HikariEssentialsToken.getMysql().getConnection().prepareStatement("UPDATE `user` SET Bank=? WHERE (UUID=?)");
+            PreparedStatement statement = HikariMain.getMysql().getConnection().prepareStatement("UPDATE `user` SET Bank=? WHERE (UUID=?)");
             statement.setInt(1, getBankInt(uuid) + amount);
             statement.setString(2, uuid.toString());
             statement.executeUpdate();
@@ -93,7 +93,7 @@ public class H2UserData {
 
     public static void removeBank(UUID uuid, int amount) {
         try {
-            PreparedStatement statement = HikariEssentialsToken.getMysql().getConnection().prepareStatement("UPDATE `user` SET Bank=? WHERE (UUID=?)");
+            PreparedStatement statement = HikariMain.getMysql().getConnection().prepareStatement("UPDATE `user` SET Bank=? WHERE (UUID=?)");
             statement.setInt(1, getBankInt(uuid) - amount);
             statement.setString(2, uuid.toString());
             statement.executeUpdate();
@@ -105,7 +105,7 @@ public class H2UserData {
 
     public static void setTokens(UUID uuid, int amount) {
         try {
-            PreparedStatement statement = HikariEssentialsToken.getH2Database().getConnection().prepareStatement("UPDATE `user` SET Tokens=? WHERE (UUID=?)");
+            PreparedStatement statement = HikariMain.getH2Database().getConnection().prepareStatement("UPDATE `user` SET Tokens=? WHERE (UUID=?)");
             statement.setInt(1, amount);
             statement.setString(2, uuid.toString());
             statement.executeUpdate();
@@ -116,7 +116,7 @@ public class H2UserData {
 
     public static void setTokens(UUID uuid, double amount) {
         try {
-            PreparedStatement statement = HikariEssentialsToken.getH2Database().getConnection().prepareStatement("UPDATE `user` SET Tokens=? WHERE (UUID=?)");
+            PreparedStatement statement = HikariMain.getH2Database().getConnection().prepareStatement("UPDATE `user` SET Tokens=? WHERE (UUID=?)");
             statement.setDouble(1, amount);
             statement.setString(2, uuid.toString());
             statement.executeUpdate();
@@ -127,7 +127,7 @@ public class H2UserData {
 
     public static void addTokens(UUID uuid, int amount) {
         try {
-            PreparedStatement statement = HikariEssentialsToken.getH2Database().getConnection().prepareStatement("UPDATE `user` SET Tokens=? WHERE (UUID=?)");
+            PreparedStatement statement = HikariMain.getH2Database().getConnection().prepareStatement("UPDATE `user` SET Tokens=? WHERE (UUID=?)");
             statement.setInt(1, getTokensInt(uuid) + amount);
             statement.setString(2, uuid.toString());
             statement.executeUpdate();
@@ -138,7 +138,7 @@ public class H2UserData {
 
     public static void removeTokens(UUID uuid, int amount) {
         try {
-            PreparedStatement statement = HikariEssentialsToken.getH2Database().getConnection().prepareStatement("UPDATE `user` SET Tokens=? WHERE (UUID=?)");
+            PreparedStatement statement = HikariMain.getH2Database().getConnection().prepareStatement("UPDATE `user` SET Tokens=? WHERE (UUID=?)");
             statement.setInt(1, getTokensInt(uuid) - amount);
             statement.setString(2, uuid.toString());
             statement.executeUpdate();
@@ -149,7 +149,7 @@ public class H2UserData {
 
     public static void addTokens(UUID uuid, double amount) {
         try {
-            PreparedStatement statement = HikariEssentialsToken.getH2Database().getConnection().prepareStatement("UPDATE `user` SET Tokens=? WHERE (UUID=?)");
+            PreparedStatement statement = HikariMain.getH2Database().getConnection().prepareStatement("UPDATE `user` SET Tokens=? WHERE (UUID=?)");
             statement.setDouble(1, getTokensDouble(uuid) + amount);
             statement.setString(2, uuid.toString());
             statement.executeUpdate();
@@ -160,7 +160,7 @@ public class H2UserData {
 
     public static void removeTokens(UUID uuid, double amount) {
         try {
-            PreparedStatement statement = HikariEssentialsToken.getH2Database().getConnection().prepareStatement("UPDATE `user` SET Tokens=? WHERE (UUID=?)");
+            PreparedStatement statement = HikariMain.getH2Database().getConnection().prepareStatement("UPDATE `user` SET Tokens=? WHERE (UUID=?)");
             statement.setDouble(1, getTokensDouble(uuid) - amount);
             statement.setString(2, uuid.toString());
             statement.executeUpdate();
@@ -171,7 +171,7 @@ public class H2UserData {
 
     public static boolean getIgnore(UUID uuid) {
         try {
-            PreparedStatement statement = HikariEssentialsToken.getH2Database().getConnection().prepareStatement("SELECT * FROM `user` WHERE (UUID=?)");
+            PreparedStatement statement = HikariMain.getH2Database().getConnection().prepareStatement("SELECT * FROM `user` WHERE (UUID=?)");
             statement.setString(1, String.valueOf(uuid));
             ResultSet resultSet = statement.executeQuery();
 
@@ -188,7 +188,7 @@ public class H2UserData {
 
     public static double getBankDouble(UUID uuid) {
         try {
-            PreparedStatement statement = HikariEssentialsToken.getH2Database().getConnection().prepareStatement("SELECT * FROM `user` WHERE (UUID=?)");
+            PreparedStatement statement = HikariMain.getH2Database().getConnection().prepareStatement("SELECT * FROM `user` WHERE (UUID=?)");
             statement.setString(1, String.valueOf(uuid));
             ResultSet resultSet = statement.executeQuery();
 
@@ -205,7 +205,7 @@ public class H2UserData {
 
     public static int getBankInt(UUID uuid) {
         try {
-            PreparedStatement statement = HikariEssentialsToken.getH2Database().getConnection().prepareStatement("SELECT * FROM `user` WHERE (UUID=?)");
+            PreparedStatement statement = HikariMain.getH2Database().getConnection().prepareStatement("SELECT * FROM `user` WHERE (UUID=?)");
             statement.setString(1, String.valueOf(uuid));
             ResultSet resultSet = statement.executeQuery();
 
@@ -222,7 +222,7 @@ public class H2UserData {
 
     public static double getTokensDouble(UUID uuid) {
         try {
-            PreparedStatement statement = HikariEssentialsToken.getH2Database().getConnection().prepareStatement("SELECT * FROM `user` WHERE (UUID=?)");
+            PreparedStatement statement = HikariMain.getH2Database().getConnection().prepareStatement("SELECT * FROM `user` WHERE (UUID=?)");
             statement.setString(1, String.valueOf(uuid));
             ResultSet resultSet = statement.executeQuery();
 
@@ -239,7 +239,7 @@ public class H2UserData {
 
     public static int getTokensInt(UUID uuid) {
         try {
-            PreparedStatement statement = HikariEssentialsToken.getH2Database().getConnection().prepareStatement("SELECT * FROM `user` WHERE (UUID=?)");
+            PreparedStatement statement = HikariMain.getH2Database().getConnection().prepareStatement("SELECT * FROM `user` WHERE (UUID=?)");
             statement.setString(1, String.valueOf(uuid));
             ResultSet resultSet = statement.executeQuery();
 
@@ -256,7 +256,7 @@ public class H2UserData {
 
     public static double getTokensDoubleByName(String player) {
         try {
-            PreparedStatement statement = HikariEssentialsToken.getH2Database().getConnection().prepareStatement("SELECT * FROM `user` WHERE (Name=?)");
+            PreparedStatement statement = HikariMain.getH2Database().getConnection().prepareStatement("SELECT * FROM `user` WHERE (Name=?)");
             statement.setString(1, player);
             ResultSet resultSet = statement.executeQuery();
 
@@ -275,8 +275,8 @@ public class H2UserData {
         TreeMap<String, Integer> topTokens = new TreeMap<>();
 
         try {
-            PreparedStatement statement = HikariEssentialsToken.getH2Database().getConnection().prepareStatement("SELECT * FROM `user` ORDER BY 'Tokens' DESC LIMIT " +
-                    HikariEssentialsToken.getConfigManager().getConfig().getInt("t.plugin.leaderboard-entries"));
+            PreparedStatement statement = HikariMain.getH2Database().getConnection().prepareStatement("SELECT * FROM `user` ORDER BY 'Tokens' DESC LIMIT " +
+                    HikariMain.getConfigManager().getConfig().getInt("t.plugin.leaderboard-entries"));
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -294,7 +294,7 @@ public class H2UserData {
 
     public static Double getServerTotalTokens() {
         try {
-            PreparedStatement statement = HikariEssentialsToken.getH2Database().getConnection().prepareStatement("SELECT * FROM `user`");
+            PreparedStatement statement = HikariMain.getH2Database().getConnection().prepareStatement("SELECT * FROM `user`");
             ResultSet rs = statement.executeQuery();
             double total = 0.0;
 

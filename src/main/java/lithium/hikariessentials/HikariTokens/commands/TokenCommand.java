@@ -1,6 +1,6 @@
 package lithium.hikariessentials.HikariTokens.commands;
 
-import lithium.hikariessentials.HikariTokens.HikariEssentialsToken;
+import lithium.hikariessentials.HikariMain;
 import lithium.hikariessentials.HikariTokens.data.UserData;
 import lithium.hikariessentials.HikariTokens.manager.BankManager;
 import lithium.hikariessentials.HikariTokens.manager.ConfigManager;
@@ -22,8 +22,8 @@ import static lithium.hikariessentials.HikariTokens.utils.TokenUtils.msgPlayer;
 
 public class TokenCommand implements CommandExecutor {
 
-    private final HikariEssentialsToken te = HikariEssentialsToken.getPlugin(HikariEssentialsToken.class);
-    private final ConfigManager config = HikariEssentialsToken.getConfigManager();
+    private final HikariMain te = HikariMain.getPlugin(HikariMain.class);
+    private final ConfigManager config = HikariMain.getConfigManager();
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -33,15 +33,15 @@ public class TokenCommand implements CommandExecutor {
 
             Player player = (Player) sender;
 
-            TokenManager tokens = HikariEssentialsToken.getTokenManager(player);
+            TokenManager tokens = HikariMain.getTokenManager(player);
 
             if (cmd.getName().equalsIgnoreCase("hikaritoken")) {
                 if (args.length == 0) {
                     if (player.hasPermission("te.mainmenu")) {
-                        new TokenMenu(HikariEssentialsToken.getMenuUtil(player)).open();
+                        new TokenMenu(HikariMain.getMenuUtil(player)).open();
                     } else {
                         player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(
-                                HikariEssentialsToken.getConfigManager().getMessages().getString("m.PERMISSION")).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix())));
+                                HikariMain.getConfigManager().getMessages().getString("m.PERMISSION")).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix())));
                     }
                 } else if (args.length == 1) {
                     if (args[0].equalsIgnoreCase("help")) {
@@ -64,10 +64,10 @@ public class TokenCommand implements CommandExecutor {
                                 "");
                     } else if (args[0].equalsIgnoreCase("top")) {
                         if (player.hasPermission("te.baltop") || player.hasPermission("te.player")) {
-                            new TopMenu(HikariEssentialsToken.getMenuUtil(player)).open();
+                            new TopMenu(HikariMain.getMenuUtil(player)).open();
                         } else {
                             player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(
-                                    HikariEssentialsToken.getConfigManager().getMessages().getString("m.PERMISSION")).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix())));
+                                    HikariMain.getConfigManager().getMessages().getString("m.PERMISSION")).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix())));
                         }
                     } else if (args[0].equalsIgnoreCase("toggle")) {
                         if (player.hasPermission("te.toggle")) {
@@ -80,35 +80,35 @@ public class TokenCommand implements CommandExecutor {
                             }
                         } else {
                             player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(
-                                    HikariEssentialsToken.getConfigManager().getMessages().getString("m.PERMISSION")).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix())));
+                                    HikariMain.getConfigManager().getMessages().getString("m.PERMISSION")).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix())));
                         }
                     } else if (args[0].equalsIgnoreCase("bank")) {
                         if (player.hasPermission("te.bank") || player.hasPermission("te.player")) {
-                            BankManager bank = HikariEssentialsToken.getBankManager(player);
+                            BankManager bank = HikariMain.getBankManager(player);
 
                             player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(
-                                    HikariEssentialsToken.getConfigManager().getMessages().getString("m.BANK-BALANCE")).replaceAll("%tokens%",
-                                    String.valueOf(bank.getBank()).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix()))));
+                                    HikariMain.getConfigManager().getMessages().getString("m.BANK-BALANCE")).replaceAll("%tokens%",
+                                    String.valueOf(bank.getBank()).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix()))));
                         } else {
                             player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(
-                                    HikariEssentialsToken.getConfigManager().getMessages().getString("m.PERMISSION")).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix())));
+                                    HikariMain.getConfigManager().getMessages().getString("m.PERMISSION")).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix())));
                         }
                     } else if (args[0].equalsIgnoreCase("balance")) {
                         if (player.hasPermission("te.balance") || player.hasPermission("te.player")) {
 
                             player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(
-                                    HikariEssentialsToken.getConfigManager().getMessages().getString("m.BALANCE")).replaceAll("%tokens%",
-                                    String.valueOf(tokens.getTokens()).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix()))));
+                                    HikariMain.getConfigManager().getMessages().getString("m.BALANCE")).replaceAll("%tokens%",
+                                    String.valueOf(tokens.getTokens()).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix()))));
                         } else {
                             player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(
-                                    HikariEssentialsToken.getConfigManager().getMessages().getString("m.PERMISSION")).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix())));
+                                    HikariMain.getConfigManager().getMessages().getString("m.PERMISSION")).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix())));
                         }
                     } else if (args[0].equalsIgnoreCase("exchange")) {
                         if (player.hasPermission("te.exchange") || player.hasPermission("te.player")) {
-                            new ExchangeMenu(HikariEssentialsToken.getMenuUtil(player)).open();
+                            new ExchangeMenu(HikariMain.getMenuUtil(player)).open();
                         } else {
                             player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(
-                                    HikariEssentialsToken.getConfigManager().getMessages().getString("m.PERMISSION")).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix())));
+                                    HikariMain.getConfigManager().getMessages().getString("m.PERMISSION")).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix())));
                         }
                     } else if (args[0].equalsIgnoreCase("stats")) {
                         if (player.hasPermission("te.stats") || player.hasPermission("te.player")) {
@@ -117,7 +117,7 @@ public class TokenCommand implements CommandExecutor {
                             player.sendMessage(ColorUtils.translateColorCodes("&7Dein Tokenstand: &e" + UserData.getTokensInt(player.getUniqueId())));
                         } else {
                             player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(
-                                    HikariEssentialsToken.getConfigManager().getMessages().getString("m.PERMISSION")).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix())));
+                                    HikariMain.getConfigManager().getMessages().getString("m.PERMISSION")).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix())));
                         }
                     } else {
                         player.sendMessage(ColorUtils.translateColorCodes("&c[&l!&c] &7Falscher Befehl! Nutze &c/tokens help"));
@@ -130,12 +130,12 @@ public class TokenCommand implements CommandExecutor {
                             double amount2 = Double.parseDouble(args[2]);
                             if (receiver != null) {
                                 if (!UserData.getIgnore(receiver.getUniqueId())) {
-                                    TokenManager ptokens = HikariEssentialsToken.getTokenManager(player);
-                                    TokenManager rtokens = HikariEssentialsToken.getTokenManager(receiver);
-                                    if (!(rtokens.getTokens() >= HikariEssentialsToken.getConfigManager().getConfig().getInt("t.player.max-balance"))) {
+                                    TokenManager ptokens = HikariMain.getTokenManager(player);
+                                    TokenManager rtokens = HikariMain.getTokenManager(receiver);
+                                    if (!(rtokens.getTokens() >= HikariMain.getConfigManager().getConfig().getInt("t.player.max-balance"))) {
                                         if (receiver != player) {
-                                            if (amount1 >= HikariEssentialsToken.getConfigManager().getMinPay() || amount2 >= HikariEssentialsToken.getConfigManager().getMinPay()) {
-                                                if (amount1 <= HikariEssentialsToken.getConfigManager().getMaxPay() || amount2 <= HikariEssentialsToken.getConfigManager().getMaxPay()) {
+                                            if (amount1 >= HikariMain.getConfigManager().getMinPay() || amount2 >= HikariMain.getConfigManager().getMinPay()) {
+                                                if (amount1 <= HikariMain.getConfigManager().getMaxPay() || amount2 <= HikariMain.getConfigManager().getMaxPay()) {
                                                     if (ptokens.getTokens() >= amount1) {
                                                         if (isInt(args[1])) {
                                                             rtokens.addTokens(amount1);
@@ -169,11 +169,11 @@ public class TokenCommand implements CommandExecutor {
                                                         player.sendMessage(ChatColor.RED + "Du hast nicht genug Tokens!");
                                                     }
                                                 } else {
-                                                    int value = HikariEssentialsToken.getConfigManager().getMaxPay();
+                                                    int value = HikariMain.getConfigManager().getMaxPay();
                                                     player.sendMessage(ColorUtils.translateColorCodes("&7Du kannst Maximal &c" + value + " &#00fb9aTokens &7senden!"));
                                                 }
                                             } else {
-                                                int value = HikariEssentialsToken.getConfigManager().getMinPay();
+                                                int value = HikariMain.getConfigManager().getMinPay();
                                                 player.sendMessage(ColorUtils.translateColorCodes("&7Du musst minimal &c" + value + " &#00fb9aTokens &7senden!"));
                                             }
                                         } else {
@@ -190,7 +190,7 @@ public class TokenCommand implements CommandExecutor {
                             }
                         } else {
                             player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(
-                                    HikariEssentialsToken.getConfigManager().getMessages().getString("m.PERMISSION")).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix())));
+                                    HikariMain.getConfigManager().getMessages().getString("m.PERMISSION")).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix())));
                         }
                     } else {
                         player.sendMessage(ColorUtils.translateColorCodes("&c[&l!&c] &7Falscher Befehl! Nutze &c/tokens help"));

@@ -1,6 +1,6 @@
 package lithium.hikariessentials.HikariTokens.utils.menu.menus;
 
-import lithium.hikariessentials.HikariTokens.HikariEssentialsToken;
+import lithium.hikariessentials.HikariMain;
 import lithium.hikariessentials.HikariTokens.manager.TokenManager;
 import lithium.hikariessentials.HikariTokens.utils.TokenUtils;
 import lithium.hikariessentials.HikariTokens.utils.menu.TokenMenuUtil;
@@ -13,7 +13,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,7 +22,7 @@ import static lithium.hikariessentials.HikariTokens.utils.TokenUtils.msgPlayer;
 public class TokenMenu extends lithium.hikariessentials.HikariTokens.utils.menu.TokenMenu {
 
 
-    private final HikariEssentialsToken te = HikariEssentialsToken.getPlugin(HikariEssentialsToken.class);
+    private final HikariMain te = HikariMain.getPlugin(HikariMain.class);
 
     public TokenMenu(TokenMenuUtil menuUtil) {
         super(menuUtil);
@@ -31,26 +30,26 @@ public class TokenMenu extends lithium.hikariessentials.HikariTokens.utils.menu.
 
     @Override
     public String getMenuName() {
-        return TokenUtils.applyFormat(HikariEssentialsToken.getConfigManager().getTitleMenu(menuUtil.getOwner()));
+        return TokenUtils.applyFormat(HikariMain.getConfigManager().getTitleMenu(menuUtil.getOwner()));
     }
 
     @Override
     public int getSlots() {
-        return HikariEssentialsToken.getConfigManager().getSlotsMenu();
+        return HikariMain.getConfigManager().getSlotsMenu();
     }
 
     @Override
     public void handleMenu(InventoryClickEvent e) {
 
-        String exchange = HikariEssentialsToken.getConfigManager().getTokenMenu().getString("gui.items.exchange.displayname");
-        String top = HikariEssentialsToken.getConfigManager().getTokenMenu().getString("gui.items.top.displayname");
+        String exchange = HikariMain.getConfigManager().getTokenMenu().getString("gui.items.exchange.displayname");
+        String top = HikariMain.getConfigManager().getTokenMenu().getString("gui.items.top.displayname");
 
         if (Objects.requireNonNull(Objects.requireNonNull(e.getCurrentItem()).getItemMeta()).getDisplayName().equals(TokenUtils.applyFormat(exchange))) {
             e.setCancelled(true);
-            new ExchangeMenu(HikariEssentialsToken.getMenuUtil(menuUtil.getOwner())).open();
+            new ExchangeMenu(HikariMain.getMenuUtil(menuUtil.getOwner())).open();
         } else if (Objects.requireNonNull(Objects.requireNonNull(e.getCurrentItem()).getItemMeta()).getDisplayName().equals(TokenUtils.applyFormat(top))) {
             e.setCancelled(true);
-            new TopMenu(HikariEssentialsToken.getMenuUtil(menuUtil.getOwner())).open();
+            new TopMenu(HikariMain.getMenuUtil(menuUtil.getOwner())).open();
         } else if (Objects.requireNonNull(Objects.requireNonNull(e.getCurrentItem()).getItemMeta()).getDisplayName().equals(TokenUtils.applyFormat("&6Token Guide &7(Commands)"))) {
             e.setCancelled(true);
             menuUtil.getOwner().closeInventory();
@@ -74,17 +73,17 @@ public class TokenMenu extends lithium.hikariessentials.HikariTokens.utils.menu.
     public void setMenuItems() {
 
         // add config items
-        for (String items : Objects.requireNonNull(HikariEssentialsToken.getConfigManager().getTokenMenu().getConfigurationSection("gui.items")).getKeys(false)) {
-            TokenManager tokens = HikariEssentialsToken.getTokenManager(menuUtil.getOwner());
+        for (String items : Objects.requireNonNull(HikariMain.getConfigManager().getTokenMenu().getConfigurationSection("gui.items")).getKeys(false)) {
+            TokenManager tokens = HikariMain.getTokenManager(menuUtil.getOwner());
 
-            String displayname = Objects.requireNonNull(HikariEssentialsToken.getConfigManager().getTokenMenu().getString("gui.items." + items + ".displayname")).replaceAll("%tokens%", String.valueOf(tokens.getTokens()));
-            int slot = HikariEssentialsToken.getConfigManager().getTokenMenu().getInt("gui.items." + items + ".slot");
-            boolean glow = HikariEssentialsToken.getConfigManager().getTokenMenu().getBoolean("gui.items." + items + ".glow");
-            String material = Objects.requireNonNull(HikariEssentialsToken.getConfigManager().getTokenMenu().getString("gui.items." + items + ".material")).toUpperCase();
+            String displayname = Objects.requireNonNull(HikariMain.getConfigManager().getTokenMenu().getString("gui.items." + items + ".displayname")).replaceAll("%tokens%", String.valueOf(tokens.getTokens()));
+            int slot = HikariMain.getConfigManager().getTokenMenu().getInt("gui.items." + items + ".slot");
+            boolean glow = HikariMain.getConfigManager().getTokenMenu().getBoolean("gui.items." + items + ".glow");
+            String material = Objects.requireNonNull(HikariMain.getConfigManager().getTokenMenu().getString("gui.items." + items + ".material")).toUpperCase();
 
             ItemStack item = new ItemStack(Material.valueOf(material), 1);
 
-            for (String lore1 : HikariEssentialsToken.getConfigManager().getTokenMenu().getStringList("gui.items." + items + ".lore")) {
+            for (String lore1 : HikariMain.getConfigManager().getTokenMenu().getStringList("gui.items." + items + ".lore")) {
                 nameItem(item, ColorUtils.translateColorCodes(displayname), lore1.replaceAll("%tokens%", String.valueOf(tokens.getTokens())));
             }
 

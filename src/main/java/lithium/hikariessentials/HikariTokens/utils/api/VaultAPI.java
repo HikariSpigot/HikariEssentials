@@ -1,6 +1,6 @@
 package lithium.hikariessentials.HikariTokens.utils.api;
 
-import lithium.hikariessentials.HikariTokens.HikariEssentialsToken;
+import lithium.hikariessentials.HikariMain;
 import lithium.hikariessentials.HikariTokens.data.H2UserData;
 import lithium.hikariessentials.HikariTokens.data.UserData;
 import net.milkbowl.vault.economy.Economy;
@@ -18,7 +18,7 @@ public class VaultAPI implements Economy {
 
     @Override
     public String getName() {
-        return HikariEssentialsToken.getInstance().getDescription().getName();
+        return HikariMain.getInstance().getDescription().getName();
     }
 
     @Override
@@ -53,10 +53,10 @@ public class VaultAPI implements Economy {
 
     @Override
     public boolean hasAccount(OfflinePlayer player) {
-        if (HikariEssentialsToken.getInstance().isMySQL()) {
-            return HikariEssentialsToken.getUser().exists(player.getUniqueId());
-        } else if (HikariEssentialsToken.getInstance().isH2()) {
-            return HikariEssentialsToken.getH2user().exists(player.getUniqueId());
+        if (HikariMain.getInstance().isMySQL()) {
+            return HikariMain.getUser().exists(player.getUniqueId());
+        } else if (HikariMain.getInstance().isH2()) {
+            return HikariMain.getH2user().exists(player.getUniqueId());
         }
 
         return false;
@@ -81,9 +81,9 @@ public class VaultAPI implements Economy {
     public double getBalance(OfflinePlayer player) {
         double amount = 0;
 
-        if (HikariEssentialsToken.getInstance().isMySQL()) {
+        if (HikariMain.getInstance().isMySQL()) {
             amount = UserData.getTokensInt(player.getUniqueId());
-        } else if (HikariEssentialsToken.getInstance().isMySQL()) {
+        } else if (HikariMain.getInstance().isMySQL()) {
             amount = H2UserData.getTokensInt(player.getUniqueId());
         }
 

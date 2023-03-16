@@ -1,6 +1,5 @@
 package lithium.hikariessentials;
 
-import lithium.hikariessentials.HikariTokens.HikariEssentialsToken;
 import lithium.hikariessentials.HikariTokens.commands.*;
 import lithium.hikariessentials.HikariTokens.data.*;
 import lithium.hikariessentials.HikariTokens.hook.LoadHook;
@@ -80,7 +79,7 @@ public class HikariMain extends JavaPlugin {
 
         instance = this;
 
-        this.saveDefaultConfig();
+        this.saveConfig();
         this.callMetrics();
 
         messageFile = new File(getDataFolder(), "messages.yml");

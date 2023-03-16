@@ -1,6 +1,6 @@
 package lithium.hikariessentials.HikariTokens.commands;
 
-import lithium.hikariessentials.HikariTokens.HikariEssentialsToken;
+import lithium.hikariessentials.HikariMain;
 import lithium.hikariessentials.HikariTokens.data.H2UserData;
 import lithium.hikariessentials.HikariTokens.data.UserData;
 import lithium.hikariessentials.HikariTokens.utils.TokenUtils;
@@ -14,7 +14,7 @@ import java.util.Objects;
 
 public class TStats implements CommandExecutor {
 
-    private final HikariEssentialsToken te = HikariEssentialsToken.getPlugin(HikariEssentialsToken.class);
+    private final HikariMain te = HikariMain.getPlugin(HikariMain.class);
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -37,7 +37,7 @@ public class TStats implements CommandExecutor {
                     }
                 } else {
                     player.sendMessage(TokenUtils.applyFormat(Objects.requireNonNull(
-                            HikariEssentialsToken.getConfigManager().getMessages().getString("m.PERMISSION"))));
+                            HikariMain.getConfigManager().getMessages().getString("m.PERMISSION"))));
                 }
             }
         }

@@ -1,6 +1,6 @@
 package lithium.hikariessentials.HikariTokens.hook;
 
-import lithium.hikariessentials.HikariTokens.HikariEssentialsToken;
+import lithium.hikariessentials.HikariMain;
 import lithium.hikariessentials.HikariTokens.data.H2UserData;
 import lithium.hikariessentials.HikariTokens.data.MySQLUserData;
 import lithium.hikariessentials.HikariTokens.manager.TokenManager;
@@ -17,12 +17,12 @@ public class VaultAPI implements Economy {
 
     @Override
     public boolean isEnabled() {
-        return HikariEssentialsToken.getInstance().getConfig().getBoolean("t.support.tokeneco-vault-dependency");
+        return HikariMain.getInstance().getConfig().getBoolean("t.support.tokeneco-vault-dependency");
     }
 
     @Override
     public String getName() {
-        return HikariEssentialsToken.getInstance().getDescription().getName();
+        return HikariMain.getInstance().getDescription().getName();
     }
 
     @Override
@@ -55,10 +55,10 @@ public class VaultAPI implements Economy {
 
         OfflinePlayer player = Bukkit.getOfflinePlayer(playerName);
 
-        if (HikariEssentialsToken.getInstance().isMySQL()) {
-            return HikariEssentialsToken.getUser().exists(player.getUniqueId());
-        } else if (HikariEssentialsToken.getInstance().isH2()) {
-            return HikariEssentialsToken.getH2user().exists(player.getUniqueId());
+        if (HikariMain.getInstance().isMySQL()) {
+            return HikariMain.getUser().exists(player.getUniqueId());
+        } else if (HikariMain.getInstance().isH2()) {
+            return HikariMain.getH2user().exists(player.getUniqueId());
         }
 
         return false;
@@ -66,10 +66,10 @@ public class VaultAPI implements Economy {
 
     @Override
     public boolean hasAccount(OfflinePlayer player) {
-        if (HikariEssentialsToken.getInstance().isMySQL()) {
-            return HikariEssentialsToken.getUser().exists(player.getUniqueId());
-        } else if (HikariEssentialsToken.getInstance().isH2()) {
-            return HikariEssentialsToken.getH2user().exists(player.getUniqueId());
+        if (HikariMain.getInstance().isMySQL()) {
+            return HikariMain.getUser().exists(player.getUniqueId());
+        } else if (HikariMain.getInstance().isH2()) {
+            return HikariMain.getH2user().exists(player.getUniqueId());
         }
 
         return false;
@@ -92,13 +92,13 @@ public class VaultAPI implements Economy {
         OfflinePlayer player = Bukkit.getOfflinePlayer(playerName);
 
         if (!player.isOnline()) {
-            if (HikariEssentialsToken.getInstance().isMySQL()) {
+            if (HikariMain.getInstance().isMySQL()) {
                 amount = MySQLUserData.getTokensInt(player.getUniqueId());
-            } else if (HikariEssentialsToken.getInstance().isMySQL()) {
+            } else if (HikariMain.getInstance().isMySQL()) {
                 amount = H2UserData.getTokensInt(player.getUniqueId());
             }
         } else {
-            TokenManager tokens = HikariEssentialsToken.getTokenManager(player);
+            TokenManager tokens = HikariMain.getTokenManager(player);
             amount = tokens.getTokens();
         }
 
@@ -110,13 +110,13 @@ public class VaultAPI implements Economy {
         double amount = 0;
 
         if (!player.isOnline()) {
-            if (HikariEssentialsToken.getInstance().isMySQL()) {
+            if (HikariMain.getInstance().isMySQL()) {
                 amount = MySQLUserData.getTokensInt(player.getUniqueId());
-            } else if (HikariEssentialsToken.getInstance().isMySQL()) {
+            } else if (HikariMain.getInstance().isMySQL()) {
                 amount = H2UserData.getTokensInt(player.getUniqueId());
             }
         } else {
-            TokenManager tokens = HikariEssentialsToken.getTokenManager(player);
+            TokenManager tokens = HikariMain.getTokenManager(player);
             amount = tokens.getTokens();
         }
 
@@ -138,13 +138,13 @@ public class VaultAPI implements Economy {
 
         OfflinePlayer player = Bukkit.getOfflinePlayer(playerName);
 
-        TokenManager tokens = HikariEssentialsToken.getTokenManager(player);
+        TokenManager tokens = HikariMain.getTokenManager(player);
         return tokens.getTokens() >= amount;
     }
 
     @Override
     public boolean has(OfflinePlayer player, double amount) {
-        TokenManager tokens = HikariEssentialsToken.getTokenManager(player);
+        TokenManager tokens = HikariMain.getTokenManager(player);
         return tokens.getTokens() >= amount;
     }
 
@@ -164,7 +164,7 @@ public class VaultAPI implements Economy {
 
         OfflinePlayer player = Bukkit.getOfflinePlayer(playerName);
 
-        TokenManager tokens = HikariEssentialsToken.getTokenManager(player);
+        TokenManager tokens = HikariMain.getTokenManager(player);
 
 
         if (tokens.getTokens() < amount) {
@@ -181,7 +181,7 @@ public class VaultAPI implements Economy {
 
         int i = (int) amount;
 
-        TokenManager tokens = HikariEssentialsToken.getTokenManager(player);
+        TokenManager tokens = HikariMain.getTokenManager(player);
 
 
         if (tokens.getTokens() < amount) {
@@ -212,7 +212,7 @@ public class VaultAPI implements Economy {
     public EconomyResponse depositPlayer(OfflinePlayer player, double amount) {
         int i = (int) amount;
 
-        TokenManager tokens = HikariEssentialsToken.getTokenManager(player);
+        TokenManager tokens = HikariMain.getTokenManager(player);
         tokens.addTokens(i);
 
         return new EconomyResponse(amount, tokens.getTokens(), EconomyResponse.ResponseType.SUCCESS, "");
@@ -295,14 +295,14 @@ public class VaultAPI implements Economy {
 
     @Override
     public boolean createPlayerAccount(OfflinePlayer player) {
-        if (HikariEssentialsToken.getInstance().isMySQL()) {
-            HikariEssentialsToken.getUser().createPlayer(Objects.requireNonNull(player.getPlayer()));
-            HikariEssentialsToken.getTokenManager(player);
-            HikariEssentialsToken.getBankManager(player);
-        } else if (HikariEssentialsToken.getInstance().isH2()) {
-            HikariEssentialsToken.getH2user().createPlayer(Objects.requireNonNull(player.getPlayer()));
-            HikariEssentialsToken.getTokenManager(player);
-            HikariEssentialsToken.getBankManager(player);
+        if (HikariMain.getInstance().isMySQL()) {
+            HikariMain.getUser().createPlayer(Objects.requireNonNull(player.getPlayer()));
+            HikariMain.getTokenManager(player);
+            HikariMain.getBankManager(player);
+        } else if (HikariMain.getInstance().isH2()) {
+            HikariMain.getH2user().createPlayer(Objects.requireNonNull(player.getPlayer()));
+            HikariMain.getTokenManager(player);
+            HikariMain.getBankManager(player);
         }
 
         return false;

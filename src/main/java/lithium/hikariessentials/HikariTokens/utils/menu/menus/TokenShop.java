@@ -1,6 +1,6 @@
 package lithium.hikariessentials.HikariTokens.utils.menu.menus;
 
-import lithium.hikariessentials.HikariTokens.HikariEssentialsToken;
+import lithium.hikariessentials.HikariMain;
 import lithium.hikariessentials.HikariTokens.manager.BankManager;
 import lithium.hikariessentials.HikariTokens.manager.TokenManager;
 import lithium.hikariessentials.HikariTokens.utils.TokenUtils;
@@ -17,7 +17,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.awt.*;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -25,7 +24,7 @@ import java.util.stream.Collectors;
 public class TokenShop extends TokenMenu {
 
 
-    private final HikariEssentialsToken te = HikariEssentialsToken.getPlugin(HikariEssentialsToken.class);
+    private final HikariMain te = HikariMain.getPlugin(HikariMain.class);
 
     public TokenShop(TokenMenuUtil menuUtil) {
         super(menuUtil);
@@ -33,55 +32,55 @@ public class TokenShop extends TokenMenu {
 
     @Override
     public String getMenuName() {
-        return TokenUtils.applyFormat(HikariEssentialsToken.getConfigManager().getTitleShop());
+        return TokenUtils.applyFormat(HikariMain.getConfigManager().getTitleShop());
     }
 
     @Override
     public int getSlots() {
-        return HikariEssentialsToken.getConfigManager().getSlotsShop();
+        return HikariMain.getConfigManager().getSlotsShop();
     }
 
     @Override
     public void handleMenu(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
 
-        for (String items : Objects.requireNonNull(HikariEssentialsToken.getConfigManager().getTokenExchange().getConfigurationSection("gui.items")).getKeys(false)) {
-            String displayname = HikariEssentialsToken.getConfigManager().getTokenExchange().getString("gui.items." + items + ".displayname");
-            int tokens = HikariEssentialsToken.getConfigManager().getTokenExchange().getInt("gui.items." + items + ".tokens");
-            int amount_material = HikariEssentialsToken.getConfigManager().getTokenExchange().getInt("gui.items." + items + ".amount");
+        for (String items : Objects.requireNonNull(HikariMain.getConfigManager().getTokenExchange().getConfigurationSection("gui.items")).getKeys(false)) {
+            String displayname = HikariMain.getConfigManager().getTokenExchange().getString("gui.items." + items + ".displayname");
+            int tokens = HikariMain.getConfigManager().getTokenExchange().getInt("gui.items." + items + ".tokens");
+            int amount_material = HikariMain.getConfigManager().getTokenExchange().getInt("gui.items." + items + ".amount");
 
 
             if (Objects.requireNonNull(Objects.requireNonNull(e.getCurrentItem()).getItemMeta()).getDisplayName().equals(TokenUtils.applyFormat(displayname))) {
                 if (hasMaterial(player.getInventory(), amount_material)) {
                     e.setCancelled(true);
-                    TokenManager ptokens = HikariEssentialsToken.getTokenManager(player);
-                    if (!(ptokens.getTokens() >= HikariEssentialsToken.getConfigManager().getConfig().getInt("t.player.max-balance"))) {
+                    TokenManager ptokens = HikariMain.getTokenManager(player);
+                    if (!(ptokens.getTokens() >= HikariMain.getConfigManager().getConfig().getInt("t.player.max-balance"))) {
                         // remove material from inventory
                         removeMaterial(player.getInventory(), amount_material);
 
                         // get and add tokens
-                        if (!HikariEssentialsToken.getConfigManager().isBankBalanceShop()) {
-                            TokenManager token = HikariEssentialsToken.getTokenManager(player);
+                        if (!HikariMain.getConfigManager().isBankBalanceShop()) {
+                            TokenManager token = HikariMain.getTokenManager(player);
                             token.addTokens(tokens);
                         } else {
-                            BankManager bank = HikariEssentialsToken.getBankManager(player);
+                            BankManager bank = HikariMain.getBankManager(player);
                             bank.addBank(tokens);
                         }
 
                         // confirmation
-                        player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(HikariEssentialsToken.getConfigManager().getMessages().getString("m.RECEIVED")).replaceAll("%tokens%", String.valueOf(tokens)).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix())));
-                        if (HikariEssentialsToken.getConfigManager().getTokenExchange().getBoolean("gui.sound.enable")) {
+                        player.sendMessage(ColorUtils.translateColorCodes(Objects.requireNonNull(HikariMain.getConfigManager().getMessages().getString("m.RECEIVED")).replaceAll("%tokens%", String.valueOf(tokens)).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix())));
+                        if (HikariMain.getConfigManager().getTokenExchange().getBoolean("gui.sound.enable")) {
                             player.playSound(player.getLocation(),
-                                    Sound.valueOf(Objects.requireNonNull(HikariEssentialsToken.getConfigManager().getTokenExchange().getString("gui.sound.success")).toUpperCase()), 1, 1);
+                                    Sound.valueOf(Objects.requireNonNull(HikariMain.getConfigManager().getTokenExchange().getString("gui.sound.success")).toUpperCase()), 1, 1);
                         }
                     } else {
                         player.sendMessage(TokenUtils.applyFormat("&cDu kannst keine Tokens mehr aufnehmen!"));
                     }
                 } else {
-                    player.sendMessage(TokenUtils.applyFormat(Objects.requireNonNull(HikariEssentialsToken.getConfigManager().getMessages().getString("m.NOT_ENOUGH_MATERIALS")).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix())));
-                    if (HikariEssentialsToken.getConfigManager().getTokenExchange().getBoolean("gui.sound.enable")) {
+                    player.sendMessage(TokenUtils.applyFormat(Objects.requireNonNull(HikariMain.getConfigManager().getMessages().getString("m.NOT_ENOUGH_MATERIALS")).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix())));
+                    if (HikariMain.getConfigManager().getTokenExchange().getBoolean("gui.sound.enable")) {
                         player.playSound(player.getLocation(),
-                                Sound.valueOf(Objects.requireNonNull(HikariEssentialsToken.getConfigManager().getTokenExchange().getString("gui.sound.failed")).toUpperCase()), 1, 1);
+                                Sound.valueOf(Objects.requireNonNull(HikariMain.getConfigManager().getTokenExchange().getString("gui.sound.failed")).toUpperCase()), 1, 1);
                     }
                 }
             }
@@ -94,19 +93,19 @@ public class TokenShop extends TokenMenu {
 
         // main items
 
-        for (String items : Objects.requireNonNull(HikariEssentialsToken.getConfigManager().getTokenExchange().getConfigurationSection("gui.items")).getKeys(false)) {
+        for (String items : Objects.requireNonNull(HikariMain.getConfigManager().getTokenExchange().getConfigurationSection("gui.items")).getKeys(false)) {
 
-            String displayname = HikariEssentialsToken.getConfigManager().getTokenExchange().getString("gui.items." + items + ".displayname");
-            int slot = HikariEssentialsToken.getConfigManager().getTokenExchange().getInt("gui.items." + items + ".slot");
-            boolean glow = HikariEssentialsToken.getConfigManager().getTokenExchange().getBoolean("gui.items." + items + ".glow");
-            String material = Objects.requireNonNull(HikariEssentialsToken.getConfigManager().getTokenExchange().getString("gui.items." + items + ".material")).toUpperCase();
-            int amount = HikariEssentialsToken.getConfigManager().getTokenExchange().getInt("gui.items." + items + ".amount");
+            String displayname = HikariMain.getConfigManager().getTokenExchange().getString("gui.items." + items + ".displayname");
+            int slot = HikariMain.getConfigManager().getTokenExchange().getInt("gui.items." + items + ".slot");
+            boolean glow = HikariMain.getConfigManager().getTokenExchange().getBoolean("gui.items." + items + ".glow");
+            String material = Objects.requireNonNull(HikariMain.getConfigManager().getTokenExchange().getString("gui.items." + items + ".material")).toUpperCase();
+            int amount = HikariMain.getConfigManager().getTokenExchange().getInt("gui.items." + items + ".amount");
 
-            //List<String> lore = HikariEssentialsToken.getConfigManager().getTokenshop().getStringList("gui.items." + items + ".lore");
+            //List<String> lore = HikariMain.getConfigManager().getTokenshop().getStringList("gui.items." + items + ".lore");
 
             ItemStack item = new ItemStack(Material.valueOf(material), amount);
 
-            for (String lore : HikariEssentialsToken.getConfigManager().getTokenExchange().getStringList("gui.items." + items + ".lore")) {
+            for (String lore : HikariMain.getConfigManager().getTokenExchange().getStringList("gui.items." + items + ".lore")) {
                 nameItem(item, TokenUtils.applyFormat(displayname), lore);
             }
 
@@ -138,7 +137,7 @@ public class TokenShop extends TokenMenu {
         for (int slot = 0; slot < size; slot++) {
             ItemStack is = inventory.getItem(slot);
             if (is == null) continue;
-            if (Material.valueOf(Objects.requireNonNull(HikariEssentialsToken.getConfigManager().getTokenExchange().getString("gui.item-exchange")).toUpperCase()) == is.getType()) {
+            if (Material.valueOf(Objects.requireNonNull(HikariMain.getConfigManager().getTokenExchange().getString("gui.item-exchange")).toUpperCase()) == is.getType()) {
                 int newAmount = is.getAmount() - amount;
                 if (newAmount > 0) {
                     is.setAmount(newAmount);
@@ -157,7 +156,7 @@ public class TokenShop extends TokenMenu {
         for (int slot = 0; slot < size; slot++) {
             ItemStack is = inventory.getItem(slot);
             if (is == null) continue;
-            if (Material.valueOf(Objects.requireNonNull(HikariEssentialsToken.getConfigManager().getTokenExchange().getString("gui.item-exchange")).toUpperCase()) == is.getType()
+            if (Material.valueOf(Objects.requireNonNull(HikariMain.getConfigManager().getTokenExchange().getString("gui.item-exchange")).toUpperCase()) == is.getType()
                     && is.getAmount() >= amount)
                 return true;
         }

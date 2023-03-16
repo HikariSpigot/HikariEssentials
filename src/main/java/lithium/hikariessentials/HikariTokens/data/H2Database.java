@@ -1,6 +1,6 @@
 package lithium.hikariessentials.HikariTokens.data;
 
-import lithium.hikariessentials.HikariTokens.HikariEssentialsToken;
+import lithium.hikariessentials.HikariMain;
 import org.bukkit.Bukkit;
 
 import java.sql.Connection;
@@ -25,7 +25,7 @@ public class H2Database {
 
         try {
             Class.forName("org.h2.Driver");
-            connection = DriverManager.getConnection(HikariEssentialsToken.getConnectionURL());
+            connection = DriverManager.getConnection(HikariMain.getConnectionURL());
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
             Bukkit.getConsoleSender().sendMessage("H2: Something wrong with connecting to h2 database type, contact the developer if you see this.");

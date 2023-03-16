@@ -1,6 +1,6 @@
 package lithium.hikariessentials.HikariTokens.commands;
 
-import lithium.hikariessentials.HikariTokens.HikariEssentialsToken;
+import lithium.hikariessentials.HikariMain;
 import lithium.hikariessentials.HikariTokens.data.H2UserData;
 import lithium.hikariessentials.HikariTokens.data.MySQLUserData;
 import lithium.hikariessentials.HikariTokens.manager.TokenManager;
@@ -18,7 +18,7 @@ import java.util.Objects;
 public class TPay implements CommandExecutor {
 
 
-    private final HikariEssentialsToken te = HikariEssentialsToken.getPlugin(HikariEssentialsToken.class);
+    private final HikariMain te = HikariMain.getPlugin(HikariMain.class);
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -38,12 +38,12 @@ public class TPay implements CommandExecutor {
                         if (receiver != null) {
                             if (te.isMySQL()) {
                                 if (!MySQLUserData.getIgnore(receiver.getUniqueId())) {
-                                    TokenManager ptokens = HikariEssentialsToken.getTokenManager(player);
-                                    TokenManager rtokens = HikariEssentialsToken.getTokenManager(receiver);
-                                    if (!(rtokens.getTokens() >= HikariEssentialsToken.getConfigManager().getConfig().getInt("t.player.max-balance"))) {
+                                    TokenManager ptokens = HikariMain.getTokenManager(player);
+                                    TokenManager rtokens = HikariMain.getTokenManager(receiver);
+                                    if (!(rtokens.getTokens() >= HikariMain.getConfigManager().getConfig().getInt("t.player.max-balance"))) {
                                         if (receiver != player) {
-                                            if (amount1 >= HikariEssentialsToken.getConfigManager().getMinPay() || amount2 >= HikariEssentialsToken.getConfigManager().getMinPay()) {
-                                                if (amount1 <= HikariEssentialsToken.getConfigManager().getMaxPay() || amount2 <= HikariEssentialsToken.getConfigManager().getMaxPay()) {
+                                            if (amount1 >= HikariMain.getConfigManager().getMinPay() || amount2 >= HikariMain.getConfigManager().getMinPay()) {
+                                                if (amount1 <= HikariMain.getConfigManager().getMaxPay() || amount2 <= HikariMain.getConfigManager().getMaxPay()) {
                                                     if (ptokens.getTokens() >= amount1) {
                                                         if (isInt(args[1])) {
                                                             rtokens.addTokens(amount1);
@@ -77,11 +77,11 @@ public class TPay implements CommandExecutor {
                                                         player.sendMessage(ChatColor.RED + "Du hast genug Tokens!");
                                                     }
                                                 } else {
-                                                    int value = HikariEssentialsToken.getConfigManager().getMaxPay();
+                                                    int value = HikariMain.getConfigManager().getMaxPay();
                                                     player.sendMessage(ColorUtils.translateColorCodes("&7Du kannst Maximal &c" + value + " &#00fb9aTokens &7senden."));
                                                 }
                                             } else {
-                                                int value = HikariEssentialsToken.getConfigManager().getMinPay();
+                                                int value = HikariMain.getConfigManager().getMinPay();
                                                 player.sendMessage(ColorUtils.translateColorCodes("&7Du musst minimal &c" + value + " &&#00fb9aTokens &7senden."));
                                             }
                                         } else {
@@ -95,12 +95,12 @@ public class TPay implements CommandExecutor {
                                 }
                             } else if (te.isH2()) {
                                 if (!H2UserData.getIgnore(receiver.getUniqueId())) {
-                                    TokenManager ptokens = HikariEssentialsToken.getTokenManager(player);
-                                    TokenManager rtokens = HikariEssentialsToken.getTokenManager(receiver);
-                                    if (!(rtokens.getTokens() >= HikariEssentialsToken.getConfigManager().getConfig().getInt("t.player.max-balance"))) {
+                                    TokenManager ptokens = HikariMain.getTokenManager(player);
+                                    TokenManager rtokens = HikariMain.getTokenManager(receiver);
+                                    if (!(rtokens.getTokens() >= HikariMain.getConfigManager().getConfig().getInt("t.player.max-balance"))) {
                                         if (receiver != player) {
-                                            if (amount1 >= HikariEssentialsToken.getConfigManager().getMinPay() || amount2 >= HikariEssentialsToken.getConfigManager().getMinPay()) {
-                                                if (amount1 <= HikariEssentialsToken.getConfigManager().getMaxPay() || amount2 <= HikariEssentialsToken.getConfigManager().getMaxPay()) {
+                                            if (amount1 >= HikariMain.getConfigManager().getMinPay() || amount2 >= HikariMain.getConfigManager().getMinPay()) {
+                                                if (amount1 <= HikariMain.getConfigManager().getMaxPay() || amount2 <= HikariMain.getConfigManager().getMaxPay()) {
                                                     if (ptokens.getTokens() >= amount1) {
                                                         if (isInt(args[1])) {
                                                             rtokens.addTokens(amount1);
@@ -134,11 +134,11 @@ public class TPay implements CommandExecutor {
                                                         player.sendMessage(ChatColor.RED + "Du hast Genug Tokens!");
                                                     }
                                                 } else {
-                                                    int value = HikariEssentialsToken.getConfigManager().getMaxPay();
+                                                    int value = HikariMain.getConfigManager().getMaxPay();
                                                     player.sendMessage(ColorUtils.translateColorCodes("&7Du kannst Maximal &c" + value + " &#00fb9aTokens &7senden."));
                                                 }
                                             } else {
-                                                int value = HikariEssentialsToken.getConfigManager().getMinPay();
+                                                int value = HikariMain.getConfigManager().getMinPay();
                                                 player.sendMessage(ColorUtils.translateColorCodes("&7Du musst minimal &c" + value + " &&#00fb9aTokens &7senden."));
                                             }
                                         } else {
@@ -159,7 +159,7 @@ public class TPay implements CommandExecutor {
                     }
                 } else {
                     player.sendMessage(TokenUtils.applyFormat(Objects.requireNonNull(
-                            HikariEssentialsToken.getConfigManager().getMessages().getString("m.PERMISSION")).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix())));
+                            HikariMain.getConfigManager().getMessages().getString("m.PERMISSION")).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix())));
                 }
             }
         }

@@ -1,7 +1,6 @@
 package lithium.hikariessentials.HikariTokens.utils.api;
 
 import lithium.hikariessentials.HikariMain;
-import lithium.hikariessentials.HikariTokens.HikariEssentialsToken;
 import lithium.hikariessentials.HikariTokens.data.UserData;
 import lithium.hikariessentials.HikariTokens.manager.BankManager;
 import lithium.hikariessentials.HikariTokens.manager.TokenManager;
@@ -46,7 +45,7 @@ public class PlaceHolderAPI extends PlaceholderExpansion {
             String text = null;
 
             if (player.isOnline()) {
-                TokenManager man = HikariEssentialsToken.getTokenManager(player);
+                TokenManager man = HikariMain.getTokenManager(player);
                 text = String.valueOf(man.getTokens());
             } else {
                 text = String.valueOf(UserData.getTokensInt(player.getUniqueId()));
@@ -59,7 +58,7 @@ public class PlaceHolderAPI extends PlaceholderExpansion {
             String text = null;
 
             if (player.isOnline()) {
-                BankManager bank = HikariEssentialsToken.getBankManager(player);
+                BankManager bank = HikariMain.getBankManager(player);
                 text = String.valueOf(bank.getBank());
             } else {
                 text = String.valueOf(UserData.getBankInt(player.getUniqueId()));
@@ -72,8 +71,8 @@ public class PlaceHolderAPI extends PlaceholderExpansion {
             String text = null;
 
             if (player.isOnline()) {
-                TokenManager man = HikariEssentialsToken.getTokenManager(player);
-                text = HikariEssentialsToken.getConfigManager().getTokenSymbol() + man.getTokens();
+                TokenManager man = HikariMain.getTokenManager(player);
+                text = HikariMain.getConfigManager().getTokenSymbol() + man.getTokens();
             } else {
                 text = String.valueOf(UserData.getTokensInt(player.getUniqueId()));
             }
@@ -85,8 +84,8 @@ public class PlaceHolderAPI extends PlaceholderExpansion {
             String text = null;
 
             if (player.isOnline()) {
-                BankManager bank = HikariEssentialsToken.getBankManager(player);
-                text = HikariEssentialsToken.getConfigManager().getTokenSymbol() + bank.getBank();
+                BankManager bank = HikariMain.getBankManager(player);
+                text = HikariMain.getConfigManager().getTokenSymbol() + bank.getBank();
             } else {
                 text = String.valueOf(UserData.getTokensInt(player.getUniqueId()));
             }
@@ -97,7 +96,7 @@ public class PlaceHolderAPI extends PlaceholderExpansion {
         if (params.equalsIgnoreCase("player_bank")) {
             String text;
 
-            BankManager bank = HikariEssentialsToken.getBankManager(player);
+            BankManager bank = HikariMain.getBankManager(player);
             text = String.valueOf(bank.getBank());
 
             return text;
@@ -106,7 +105,7 @@ public class PlaceHolderAPI extends PlaceholderExpansion {
         if (params.equalsIgnoreCase("player_money")) {
             String text;
 
-            TokenManager man = HikariEssentialsToken.getTokenManager(player);
+            TokenManager man = HikariMain.getTokenManager(player);
             text = String.valueOf(man.getTokens());
 
             return text;
@@ -115,8 +114,8 @@ public class PlaceHolderAPI extends PlaceholderExpansion {
         if (params.equalsIgnoreCase("player_money_formatted")) {
             String text;
 
-            TokenManager man = HikariEssentialsToken.getTokenManager(player);
-            text = HikariEssentialsToken.getConfigManager().getTokenSymbol() + man.getTokens();
+            TokenManager man = HikariMain.getTokenManager(player);
+            text = HikariMain.getConfigManager().getTokenSymbol() + man.getTokens();
 
             return text;
         }

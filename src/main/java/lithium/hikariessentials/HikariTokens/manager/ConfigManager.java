@@ -1,6 +1,6 @@
 package lithium.hikariessentials.HikariTokens.manager;
 
-import lithium.hikariessentials.HikariTokens.HikariEssentialsToken;
+import lithium.hikariessentials.HikariMain;
 import lithium.hikariessentials.HikariTokens.data.H2UserData;
 import lithium.hikariessentials.HikariTokens.data.MySQLUserData;
 import lithium.hikariessentials.HikariTokens.utils.TokenUtils;
@@ -150,7 +150,7 @@ public class ConfigManager {
     }
 
     public String getTitleMenu(Player player) {
-        TokenManager tokens = HikariEssentialsToken.getTokenManager(player);
+        TokenManager tokens = HikariMain.getTokenManager(player);
         return Objects.requireNonNull(getTokenMenu().getString("gui.title")).replaceAll("%tokens%", String.valueOf(tokens.getTokens()));
     }
 

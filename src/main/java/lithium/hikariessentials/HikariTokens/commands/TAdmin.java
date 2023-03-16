@@ -1,6 +1,6 @@
 package lithium.hikariessentials.HikariTokens.commands;
 
-import lithium.hikariessentials.HikariTokens.HikariEssentialsToken;
+import lithium.hikariessentials.HikariMain;
 import lithium.hikariessentials.HikariTokens.data.H2UserData;
 import lithium.hikariessentials.HikariTokens.data.MySQLUserData;
 import lithium.hikariessentials.HikariTokens.manager.BankManager;
@@ -23,8 +23,8 @@ import java.util.regex.Pattern;
 public class TAdmin implements CommandExecutor {
 
 
-    private final HikariEssentialsToken te = HikariEssentialsToken.getPlugin(HikariEssentialsToken.class);
-    private final ConfigManager config = HikariEssentialsToken.getConfigManager();
+    private final HikariMain te = HikariMain.getPlugin(HikariMain.class);
+    private final ConfigManager config = HikariMain.getConfigManager();
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -42,27 +42,27 @@ public class TAdmin implements CommandExecutor {
                         }
 
                         try {
-                            HikariEssentialsToken.messageConfig.load(HikariEssentialsToken.messageFile);
+                            HikariMain.messageConfig.load(HikariMain.messageFile);
                         } catch (IOException | InvalidConfigurationException e) {
                             e.printStackTrace();
                             Bukkit.getConsoleSender().sendMessage("Couldn't save message.yml properly!");
                         }
 
                         try {
-                            HikariEssentialsToken.tokenExchangeConfig.load(HikariEssentialsToken.tokenExchangeFile);
+                            HikariMain.tokenExchangeConfig.load(HikariMain.tokenExchangeFile);
                         } catch (IOException | InvalidConfigurationException e) {
                             e.printStackTrace();
                             Bukkit.getConsoleSender().sendMessage("Couldn't save tokenexchange.yml properly!");
                         }
 
                         try {
-                            HikariEssentialsToken.tokenTopConfig.load(HikariEssentialsToken.tokenTopFile);
+                            HikariMain.tokenTopConfig.load(HikariMain.tokenTopFile);
                         } catch (IOException | InvalidConfigurationException e) {
                             e.printStackTrace();
                             Bukkit.getConsoleSender().sendMessage("Couldn't save tokentop.yml properly!");
                         }
 
-                        sender.sendMessage(HikariEssentialsToken.getConfigManager().getReload().replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix()));
+                        sender.sendMessage(HikariMain.getConfigManager().getReload().replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix()));
                         return true;
                     } else if (args[0].equalsIgnoreCase("version")) {
                         sender.sendMessage(TokenUtils.applyFormat("&e&lADMIN &7You are using &ev" + te.getDescription().getVersion() + " &7of &e" + te.getDescription().getName()));
@@ -84,7 +84,7 @@ public class TAdmin implements CommandExecutor {
                                 H2UserData.addTokens(receiver.getUniqueId(), amount1);
                             }
                         } else {
-                            TokenManager tokens = HikariEssentialsToken.getTokenManager(receiver);
+                            TokenManager tokens = HikariMain.getTokenManager(receiver);
                             tokens.addTokens(amount1);
                         }
 
@@ -98,7 +98,7 @@ public class TAdmin implements CommandExecutor {
                                 H2UserData.setTokens(receiver.getUniqueId(), amount1);
                             }
                         } else {
-                            TokenManager tokens = HikariEssentialsToken.getTokenManager(receiver);
+                            TokenManager tokens = HikariMain.getTokenManager(receiver);
                             tokens.setTokens(amount1);
                         }
 
@@ -112,7 +112,7 @@ public class TAdmin implements CommandExecutor {
                                 H2UserData.removeTokens(receiver.getUniqueId(), amount1);
                             }
                         } else {
-                            TokenManager tokens = HikariEssentialsToken.getTokenManager(receiver);
+                            TokenManager tokens = HikariMain.getTokenManager(receiver);
                             tokens.removeTokens(amount1);
                         }
                         sender.sendMessage(TokenUtils.applyFormat("&7Removed &e" + amount1 + "&7 tokens from &e" + receiver.getName() + "&7."));
@@ -140,34 +140,34 @@ public class TAdmin implements CommandExecutor {
                             }
 
                             try {
-                                HikariEssentialsToken.messageConfig.load(HikariEssentialsToken.messageFile);
+                                HikariMain.messageConfig.load(HikariMain.messageFile);
                             } catch (IOException | InvalidConfigurationException e) {
                                 e.printStackTrace();
                                 Bukkit.getConsoleSender().sendMessage("Couldn't save message.yml properly!");
                             }
 
                             try {
-                                HikariEssentialsToken.tokenMenuConfig.load(HikariEssentialsToken.tokenMenuFile);
+                                HikariMain.tokenMenuConfig.load(HikariMain.tokenMenuFile);
                             } catch (IOException | InvalidConfigurationException e) {
                                 e.printStackTrace();
                                 Bukkit.getConsoleSender().sendMessage("Couldn't save tokenmenu.yml properly!");
                             }
 
                             try {
-                                HikariEssentialsToken.tokenExchangeConfig.load(HikariEssentialsToken.tokenExchangeFile);
+                                HikariMain.tokenExchangeConfig.load(HikariMain.tokenExchangeFile);
                             } catch (IOException | InvalidConfigurationException e) {
                                 e.printStackTrace();
                                 Bukkit.getConsoleSender().sendMessage("Couldn't save tokenexchange.yml properly!");
                             }
 
                             try {
-                                HikariEssentialsToken.tokenTopConfig.load(HikariEssentialsToken.tokenTopFile);
+                                HikariMain.tokenTopConfig.load(HikariMain.tokenTopFile);
                             } catch (IOException | InvalidConfigurationException e) {
                                 e.printStackTrace();
                                 Bukkit.getConsoleSender().sendMessage("Couldn't save tokentop.yml properly!");
                             }
 
-                            player.sendMessage(HikariEssentialsToken.getConfigManager().getReload().replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix()));
+                            player.sendMessage(HikariMain.getConfigManager().getReload().replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix()));
                             return true;
                         } else if (args[0].equalsIgnoreCase("version")) {
                             player.sendMessage(TokenUtils.applyFormat("&e&lADMIN &7You are using &ev" + te.getDescription().getVersion() + " &7of &e" + te.getDescription().getName()));
@@ -196,11 +196,11 @@ public class TAdmin implements CommandExecutor {
                                                 H2UserData.addTokens(receiver.getUniqueId(), amount1);
                                             }
                                         } else {
-                                            TokenManager tokens = HikariEssentialsToken.getTokenManager(receiver);
+                                            TokenManager tokens = HikariMain.getTokenManager(receiver);
                                             tokens.addTokens(amount1);
                                         }
 
-                                        player.sendMessage(ColorUtils.translateColorCodes("&#00fb9a&lHikariEssentialsToken&r &#00fb9aGiven " + receiver.getName() + " &e" + amount1 + " &7Tokens."));
+                                        player.sendMessage(ColorUtils.translateColorCodes("&#00fb9a&lHikariMain&r &#00fb9aGiven " + receiver.getName() + " &e" + amount1 + " &7Tokens."));
                                     } else {
                                         player.sendMessage(ColorUtils.translateColorCodes("&#00fb9aError: &7Value can't be negative."));
                                         return true;
@@ -219,11 +219,11 @@ public class TAdmin implements CommandExecutor {
                                                 H2UserData.setTokens(receiver.getUniqueId(), amount1);
                                             }
                                         } else {
-                                            TokenManager tokens = HikariEssentialsToken.getTokenManager(receiver);
+                                            TokenManager tokens = HikariMain.getTokenManager(receiver);
                                             tokens.setTokens(amount1);
                                         }
 
-                                        player.sendMessage(ColorUtils.translateColorCodes("&#00fb9a&lHikariEssentialsToken&r &7" + receiver.getName() + "'s token balance has been set to &e" + amount1));
+                                        player.sendMessage(ColorUtils.translateColorCodes("&#00fb9a&lHikariMain&r &7" + receiver.getName() + "'s token balance has been set to &e" + amount1));
                                     } else {
                                         player.sendMessage(TokenUtils.applyFormat("&cError: &7Value can't be negative."));
                                         return true;
@@ -242,10 +242,10 @@ public class TAdmin implements CommandExecutor {
                                                 H2UserData.removeTokens(receiver.getUniqueId(), amount1);
                                             }
                                         } else {
-                                            TokenManager tokens = HikariEssentialsToken.getTokenManager(receiver);
+                                            TokenManager tokens = HikariMain.getTokenManager(receiver);
                                             tokens.removeTokens(amount1);
                                         }
-                                        player.sendMessage(ColorUtils.translateColorCodes("&#00fb9a&lHikariEssentialsToken&r Removed &e" + amount1 + "&#00fb9a tokens from &e" + receiver.getName() + "&#00fb9a."));
+                                        player.sendMessage(ColorUtils.translateColorCodes("&#00fb9a&lHikariMain&r Removed &e" + amount1 + "&#00fb9a tokens from &e" + receiver.getName() + "&#00fb9a."));
                                     } else {
                                         player.sendMessage(TokenUtils.applyFormat("&cError: &7Value can't be negative."));
                                         return true;
@@ -269,7 +269,7 @@ public class TAdmin implements CommandExecutor {
                                                 H2UserData.addBank(receiver.getUniqueId(), amount1);
                                             }
                                         } else {
-                                            BankManager bank = HikariEssentialsToken.getBankManager(receiver);
+                                            BankManager bank = HikariMain.getBankManager(receiver);
                                             bank.addBank(amount1);
                                         }
 
@@ -292,7 +292,7 @@ public class TAdmin implements CommandExecutor {
                                                 H2UserData.setBank(receiver.getUniqueId(), amount1);
                                             }
                                         } else {
-                                            BankManager bank = HikariEssentialsToken.getBankManager(receiver);
+                                            BankManager bank = HikariMain.getBankManager(receiver);
                                             bank.setBank(amount1);
                                         }
 
@@ -315,7 +315,7 @@ public class TAdmin implements CommandExecutor {
                                                 H2UserData.removeBank(receiver.getUniqueId(), amount1);
                                             }
                                         } else {
-                                            BankManager bank = HikariEssentialsToken.getBankManager(receiver);
+                                            BankManager bank = HikariMain.getBankManager(receiver);
                                             bank.removeBank(amount1);
                                         }
                                         player.sendMessage(ColorUtils.translateColorCodes("&#00fb9a&lHikariBank&r &#00fb9aRemoved &e" + amount1 + "&#00fb9a tokens from &e" + receiver.getName() + "&#00fb9a."));
@@ -336,14 +336,14 @@ public class TAdmin implements CommandExecutor {
                             return true;
                         }
                     } else {
-                        for (String admin_help : HikariEssentialsToken.getConfigManager().getMessages().getStringList("m.ADMIN-HELP")) {
-                            player.sendMessage(TokenUtils.applyFormat(admin_help).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix()));
+                        for (String admin_help : HikariMain.getConfigManager().getMessages().getStringList("m.ADMIN-HELP")) {
+                            player.sendMessage(TokenUtils.applyFormat(admin_help).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix()));
                         }
                         return true;
                     }
                 } else {
                     player.sendMessage(TokenUtils.applyFormat(Objects.requireNonNull(
-                            HikariEssentialsToken.getConfigManager().getMessages().getString("m.PERMISSION")).replaceAll("%PREFIX%", HikariEssentialsToken.getConfigManager().getPrefix())));
+                            HikariMain.getConfigManager().getMessages().getString("m.PERMISSION")).replaceAll("%PREFIX%", HikariMain.getConfigManager().getPrefix())));
                 }
             }
         }
