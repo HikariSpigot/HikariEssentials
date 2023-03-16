@@ -1,6 +1,6 @@
 name: HikariEssentials
 version: '${project.version}'
-main: lithium.hikariessentials.HikariMain
+main: lithium.hikariessentials.HikariTokens.HikariEssentialsToken
 api-version: 1.19
 load: STARTUP
 authors: [HikariSpigot]

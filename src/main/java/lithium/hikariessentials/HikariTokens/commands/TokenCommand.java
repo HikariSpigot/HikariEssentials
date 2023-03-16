@@ -5,7 +5,6 @@ import lithium.hikariessentials.HikariTokens.data.UserData;
 import lithium.hikariessentials.HikariTokens.manager.BankManager;
 import lithium.hikariessentials.HikariTokens.manager.ConfigManager;
 import lithium.hikariessentials.HikariTokens.manager.TokenManager;
-import lithium.hikariessentials.HikariTokens.utils.TokenUtils;
 import lithium.hikariessentials.HikariTokens.utils.menu.menus.TokenMenu;
 import lithium.hikariessentials.HikariTokens.utils.menu.menus.ExchangeMenu;
 import lithium.hikariessentials.HikariTokens.utils.menu.menus.TopMenu;
@@ -36,7 +35,7 @@ public class TokenCommand implements CommandExecutor {
 
             TokenManager tokens = HikariEssentialsToken.getTokenManager(player);
 
-            if (cmd.getName().equalsIgnoreCase("tokens")) {
+            if (cmd.getName().equalsIgnoreCase("hikaritoken")) {
                 if (args.length == 0) {
                     if (player.hasPermission("te.mainmenu")) {
                         new TokenMenu(HikariEssentialsToken.getMenuUtil(player)).open();

@@ -1,5 +1,6 @@
 package lithium.hikariessentials.HikariTokens.utils.api;
 
+import lithium.hikariessentials.HikariMain;
 import lithium.hikariessentials.HikariTokens.HikariEssentialsToken;
 import lithium.hikariessentials.HikariTokens.data.UserData;
 import lithium.hikariessentials.HikariTokens.manager.BankManager;
@@ -11,9 +12,10 @@ import org.jetbrains.annotations.NotNull;
 public class PlaceHolderAPI extends PlaceholderExpansion {
 
 
-    private final HikariEssentialsToken plugin;
+    private final HikariMain plugin;
 
-    public PlaceHolderAPI(HikariEssentialsToken plugin) {
+
+    public PlaceHolderAPI(HikariMain plugin) {
         this.plugin = plugin;
     }
 
