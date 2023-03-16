@@ -79,7 +79,7 @@ public class HikariMain extends JavaPlugin {
 
         instance = this;
 
-        this.saveConfig();
+        this.saveDefaultConfig();
         this.callMetrics();
 
         messageFile = new File(getDataFolder(), "messages.yml");
@@ -124,9 +124,9 @@ public class HikariMain extends JavaPlugin {
 
         if (latestConfigFile != null) {
             if (deleteConfig()) {
-                latestConfigFile = new File(getDataFolder(), "latest-tokenconfig.yml");
+                latestConfigFile = new File(getDataFolder(), "latest-config.yml");
                 if (!latestConfigFile.exists())
-                    saveResource("latest-tokenconfig.yml", true);
+                    saveResource("latest-config.yml", true);
                 latestConfigConfig = new YamlConfiguration();
                 try {
                     latestConfigConfig.load(latestConfigFile);
@@ -135,9 +135,9 @@ public class HikariMain extends JavaPlugin {
                 }
             }
         } else {
-            latestConfigFile = new File(getDataFolder(), "latest-tokenconfig.yml");
+            latestConfigFile = new File(getDataFolder(), "latest-config.yml");
             if (!latestConfigFile.exists())
-                saveResource("latest-tokenconfig.yml", true);
+                saveResource("latest-config.yml", true);
             latestConfigConfig = new YamlConfiguration();
             try {
                 latestConfigConfig.load(latestConfigFile);
@@ -154,7 +154,7 @@ public class HikariMain extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerEvents(), this);
         getServer().getPluginManager().registerEvents(new KillEvents(), this);
 
-        Objects.requireNonNull(getCommand("hikaritoken")).setExecutor(new TokenCommand());
+        Objects.requireNonNull(getCommand("tokens")).setExecutor(new TokenCommand());
 
         Objects.requireNonNull(getCommand("tadmin")).setExecutor(new TAdmin());
 
@@ -205,7 +205,7 @@ public class HikariMain extends JavaPlugin {
         UserData.updateTop();
 
         try {
-            getConfig().load(getDataFolder() + "tokenconfig.yml");
+            getConfig().load(getDataFolder() + "/config.yml");
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
@@ -282,7 +282,7 @@ public class HikariMain extends JavaPlugin {
     }
 
     private boolean deleteConfig() {
-        latestConfigFile = new File(getDataFolder(), "latest-tokenconfig.yml");
+        latestConfigFile = new File(getDataFolder(), "latest-config.yml");
         Path path = latestConfigFile.toPath();
         try {
             Files.delete(path);

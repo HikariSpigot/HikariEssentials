@@ -185,7 +185,7 @@ public class TAdmin implements CommandExecutor {
                         String num = String.valueOf(amount1);
                         boolean match = Pattern.matches(pattern, num);
 
-                        if (args[0].equalsIgnoreCase("hikaritoken")) {
+                        if (args[0].equalsIgnoreCase("tokens")) {
                             if (option.equalsIgnoreCase("give")) {
                                 if (!(match)) {
                                     if (!(amount1 < 0)) {

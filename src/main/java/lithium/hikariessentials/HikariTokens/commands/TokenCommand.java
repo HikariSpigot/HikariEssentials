@@ -35,7 +35,7 @@ public class TokenCommand implements CommandExecutor {
 
             TokenManager tokens = HikariMain.getTokenManager(player);
 
-            if (cmd.getName().equalsIgnoreCase("hikaritoken")) {
+            if (cmd.getName().equalsIgnoreCase("tokens")) {
                 if (args.length == 0) {
                     if (player.hasPermission("te.mainmenu")) {
                         new TokenMenu(HikariMain.getMenuUtil(player)).open();
