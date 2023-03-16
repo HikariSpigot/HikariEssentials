@@ -134,24 +134,6 @@ public final class HikariEssentialsToken extends JavaPlugin {
         return token;
     }
 
-    private boolean deleteConfig() {
-        latestConfigFile = new File(getDataFolder(), "/hikaritoken/latest-config.yml");
-        Path path = latestConfigFile.toPath();
-        try {
-            Files.delete(path);
-            return true;
-        } catch (NoSuchFileException x) {
-            System.err.format("%s: no such" + " file or directory%n", path);
-            return false;
-        } catch (DirectoryNotEmptyException x) {
-            System.err.format("%s not empty%n", path);
-            return false;
-        } catch (IOException x) {
-            System.err.println(x);
-            return false;
-        }
-    }
-
     public static String getConnectionURL() {
         return connectionURL;
     }

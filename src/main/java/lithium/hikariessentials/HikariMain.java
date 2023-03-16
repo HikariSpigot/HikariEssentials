@@ -83,9 +83,9 @@ public class HikariMain extends JavaPlugin {
         this.saveDefaultConfig();
         this.callMetrics();
 
-        messageFile = new File(getDataFolder(), "/hikaritoken/messages.yml");
+        messageFile = new File(getDataFolder(), "messages.yml");
         if (!messageFile.exists())
-            saveResource("/hikaritoken/messages.yml", false);
+            saveResource("messages.yml", false);
         messageConfig = new YamlConfiguration();
         try {
             messageConfig.load(messageFile);
@@ -93,9 +93,9 @@ public class HikariMain extends JavaPlugin {
             e.printStackTrace();
         }
 
-        tokenExchangeFile = new File(getDataFolder(), "/hikaritoken/tokenexchange.yml");
+        tokenExchangeFile = new File(getDataFolder(), "tokenexchange.yml");
         if (!tokenExchangeFile.exists())
-            saveResource("/hikaritoken/tokenexchange.yml", false);
+            saveResource("tokenexchange.yml", false);
         tokenExchangeConfig = new YamlConfiguration();
         try {
             tokenExchangeConfig.load(tokenExchangeFile);
@@ -103,9 +103,9 @@ public class HikariMain extends JavaPlugin {
             e.printStackTrace();
         }
 
-        tokenTopFile = new File(getDataFolder(), "/hikaritoken/tokentop.yml");
+        tokenTopFile = new File(getDataFolder(), "tokentop.yml");
         if (!tokenTopFile.exists())
-            saveResource("/hikaritoken/tokentop.yml", false);
+            saveResource("tokentop.yml", false);
         tokenTopConfig = new YamlConfiguration();
         try {
             tokenTopConfig.load(tokenTopFile);
@@ -113,9 +113,9 @@ public class HikariMain extends JavaPlugin {
             e.printStackTrace();
         }
 
-        tokenMenuFile = new File(getDataFolder(), "/hikaritoken/tokenmenu.yml");
+        tokenMenuFile = new File(getDataFolder(), "tokenmenu.yml");
         if (!tokenMenuFile.exists())
-            saveResource("/hikaritoken/tokenmenu.yml", false);
+            saveResource("tokenmenu.yml", false);
         tokenMenuConfig = new YamlConfiguration();
         try {
             tokenMenuConfig.load(tokenMenuFile);
@@ -125,9 +125,9 @@ public class HikariMain extends JavaPlugin {
 
         if (latestConfigFile != null) {
             if (deleteConfig()) {
-                latestConfigFile = new File(getDataFolder(), "/hikaritoken/latest-config.yml");
+                latestConfigFile = new File(getDataFolder(), "latest-tokenconfig.yml");
                 if (!latestConfigFile.exists())
-                    saveResource("/hikaritoken/latest-config.yml", true);
+                    saveResource("latest-tokenconfig.yml", true);
                 latestConfigConfig = new YamlConfiguration();
                 try {
                     latestConfigConfig.load(latestConfigFile);
@@ -136,9 +136,9 @@ public class HikariMain extends JavaPlugin {
                 }
             }
         } else {
-            latestConfigFile = new File(getDataFolder(), "/hikaritoken/latest-config.yml");
+            latestConfigFile = new File(getDataFolder(), "latest-tokenconfig.yml");
             if (!latestConfigFile.exists())
-                saveResource("/hikaritoken/latest-config.yml", true);
+                saveResource("latest-tokenconfig.yml", true);
             latestConfigConfig = new YamlConfiguration();
             try {
                 latestConfigConfig.load(latestConfigFile);
@@ -206,7 +206,7 @@ public class HikariMain extends JavaPlugin {
         UserData.updateTop();
 
         try {
-            getConfig().load(getDataFolder() + "/hikaritoken/config.yml");
+            getConfig().load(getDataFolder() + "tokenconfig.yml");
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
@@ -283,7 +283,7 @@ public class HikariMain extends JavaPlugin {
     }
 
     private boolean deleteConfig() {
-        latestConfigFile = new File(getDataFolder(), "/hikaritoken/latest-config.yml");
+        latestConfigFile = new File(getDataFolder(), "latest-tokenconfig.yml");
         Path path = latestConfigFile.toPath();
         try {
             Files.delete(path);
